@@ -1,1 +1,93 @@
-
+  "tournament": "FIFA World Cup 2030",
+  "target": {
+    "iso": "2030-06-06T18:00:00+07:00",
+    "utc": "2030-06-06T11:00:00Z",
+    "label": "6 Juni 2030, 18:00 GMT+7",
+    "note": "Target waktu disimpan dalam UTC (\"utc\") supaya hasil hitung mundur konsisten untuk semua orang, di mana pun dan kapan pun mereka mengaksesnya. Nilai yang ditampilkan tinggal dikonversi ke timezone pilihan user."
+  },
+  "displayFormat": "DMJHBT",
+  "units": [
+    {
+      "key": "years",
+      "labelID": "Tahun"
+    },
+    {
+      "key": "months",
+      "labelID": "Bulan"
+    },
+    {
+      "key": "days",
+      "labelID": "Hari"
+    },
+    {
+      "key": "hours",
+      "labelID": "Jam"
+    },
+    {
+      "key": "minutes",
+      "labelID": "Menit"
+    },
+    {
+      "key": "seconds",
+      "labelID": "Detik"
+    }
+  ],
+  "animation": {
+    "style": "odometer",
+    "description": "Tiap digit berganti dengan animasi mirip counter subscriber: digit lama bergerak naik ke atas lalu menghilang, digit baru masuk dari bawah dan berhenti di posisi normal. Berlaku untuk seluruh 6 satuan (detik, menit, jam, hari, bulan, tahun).",
+    "durationMs": 400,
+    "easing": "ease-out"
+  },
+  "wallchartLock": {
+    "lockedUntilTargetReached": true,
+    "note": "Halaman WC 2030 Wallchart tetap terkunci selama countdown ini masih berjalan, dan otomatis terbuka begitu target waktu tercapai."
+  },
+  "timezoneSelector": {
+    "enabled": true,
+    "default": "Asia/Jakarta",
+    "defaultOffsetLabel": "GMT+7",
+    "mode": "both",
+    "note": "User bisa pilih timezone berdasarkan nama kota (contoh: Asia/Jakarta, Europe/Madrid, America/Montevideo) ATAU langsung pilih offset GMT tanpa kota (contoh: GMT+3, GMT-5). Tidak dibatasi hanya untuk Indonesia.",
+    "commonPresets": [
+      {
+        "city": "Jakarta",
+        "offset": "GMT+7"
+      },
+      {
+        "city": "Rabat",
+        "offset": "GMT+1"
+      },
+      {
+        "city": "Lisbon",
+        "offset": "GMT+1"
+      },
+      {
+        "city": "Madrid",
+        "offset": "GMT+2"
+      },
+      {
+        "city": "Montevideo",
+        "offset": "GMT-3"
+      },
+      {
+        "city": "Buenos Aires",
+        "offset": "GMT-3"
+      },
+      {
+        "city": "Asuncion",
+        "offset": "GMT-4"
+      },
+      {
+        "city": "London",
+        "offset": "GMT+1"
+      },
+      {
+        "city": "New York",
+        "offset": "GMT-4"
+      },
+      {
+        "city": "Tokyo",
+        "offset": "GMT+9"
+      }
+    ]
+  }
