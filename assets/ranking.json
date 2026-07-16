@@ -1,93 +1,60 @@
-  "tournament": "FIFA World Cup 2030",
-  "target": {
-    "iso": "2030-06-06T18:00:00+07:00",
-    "utc": "2030-06-06T11:00:00Z",
-    "label": "6 Juni 2030, 18:00 GMT+7 Jakarta",
-    "note": "Target waktu disimpan dalam UTC (\"utc\") supaya hasil hitung mundur konsisten untuk semua orang, di mana pun dan kapan pun mereka mengaksesnya. Nilai yang ditampilkan tinggal dikonversi ke timezone pilihan user."
-  },
-  "displayFormat": "DMJHBT",
-  "units": [
-    {
-      "key": "years",
-      "labelID": "Tahun"
-    },
-    {
-      "key": "months",
-      "labelID": "Bulan"
-    },
-    {
-      "key": "days",
-      "labelID": "Hari"
-    },
-    {
-      "key": "hours",
-      "labelID": "Jam"
-    },
-    {
-      "key": "minutes",
-      "labelID": "Menit"
-    },
-    {
-      "key": "seconds",
-      "labelID": "Detik"
-    }
-  ],
-  "animation": {
-    "style": "odometer",
-    "description": "Tiap digit berganti dengan animasi mirip counter subscriber: digit lama bergerak naik ke atas lalu menghilang, digit baru masuk dari bawah dan berhenti di posisi normal. Berlaku untuk seluruh 6 satuan (detik, menit, jam, hari, bulan, tahun).",
-    "durationMs": 400,
-    "easing": "ease-out"
-  },
-  "wallchartLock": {
-    "lockedUntilTargetReached": true,
-    "note": "Halaman WC 2030 Wallchart tetap terkunci selama countdown ini masih berjalan, dan otomatis terbuka begitu target waktu tercapai."
-  },
-  "timezoneSelector": {
-    "enabled": true,
-    "default": "Asia/Jakarta",
-    "defaultOffsetLabel": "GMT+7",
-    "mode": "both",
-    "note": "User bisa pilih timezone berdasarkan nama kota (contoh: Asia/Jakarta, Europe/Madrid, America/Montevideo) ATAU langsung pilih offset GMT tanpa kota (contoh: GMT+3, GMT-5). Tidak dibatasi hanya untuk Indonesia.",
-    "commonPresets": [
-      {
-        "city": "Jakarta",
-        "offset": "GMT+7"
-      },
-      {
-        "city": "Rabat",
-        "offset": "GMT+1"
-      },
-      {
-        "city": "Lisbon",
-        "offset": "GMT+1"
-      },
-      {
-        "city": "Madrid",
-        "offset": "GMT+2"
-      },
-      {
-        "city": "Montevideo",
-        "offset": "GMT-3"
-      },
-      {
-        "city": "Buenos Aires",
-        "offset": "GMT-3"
-      },
-      {
-        "city": "Asuncion",
-        "offset": "GMT-4"
-      },
-      {
-        "city": "London",
-        "offset": "GMT+1"
-      },
-      {
-        "city": "New York",
-        "offset": "GMT-4"
-      },
-      {
-        "city": "Tokyo",
-        "offset": "GMT+9"
-      }
-    ]
-  }
+
+  "title": "FIFA Men's World Ranking",
+  "scope": "Top 50",
+  "periodLabel": "20 Juli 2026",
+  "source": "Dikompilasi dari data publik ranking FIFA (unofficial live calculator), untuk keperluan informasi. Angka final dapat berbeda dari situs resmi FIFA.",
+  "lastUpdated": "2026-07-16",
+  "displayFields": ["rank", "team", "code", "points"],
+  "note": "Halaman FIFA Ranking hanya menampilkan RANK (posisi + poin), tidak menampilkan riwayat pertandingan.",
+  "rankings": [
+    { "rank": 1, "team": "France", "code": "FRA", "points": 1948.97 },
+    { "rank": 2, "team": "Argentina", "code": "ARG", "points": 1943.47 },
+    { "rank": 3, "team": "Spain", "code": "ESP", "points": 1934.79 },
+    { "rank": 4, "team": "England", "code": "ENG", "points": 1889.42 },
+    { "rank": 5, "team": "Brazil", "code": "BRA", "points": 1804.93 },
+    { "rank": 6, "team": "Morocco", "code": "MAR", "points": 1803.99 },
+    { "rank": 7, "team": "Portugal", "code": "POR", "points": 1787.86 },
+    { "rank": 8, "team": "Belgium", "code": "BEL", "points": 1778.36 },
+    { "rank": 9, "team": "Netherlands", "code": "NED", "points": 1775.54 },
+    { "rank": 10, "team": "Mexico", "code": "MEX", "points": 1754.30 },
+    { "rank": 11, "team": "Colombia", "code": "COL", "points": 1739.89 },
+    { "rank": 12, "team": "Germany", "code": "GER", "points": 1726.22 },
+    { "rank": 13, "team": "Croatia", "code": "CRO", "points": 1723.05 },
+    { "rank": 14, "team": "Switzerland", "code": "SUI", "points": 1710.88 },
+    { "rank": 15, "team": "Italy", "code": "ITA", "points": 1704.73 },
+    { "rank": 16, "team": "USA", "code": "USA", "points": 1690.33 },
+    { "rank": 17, "team": "Japan", "code": "JPN", "points": 1673.68 },
+    { "rank": 18, "team": "Senegal", "code": "SEN", "points": 1653.43 },
+    { "rank": 19, "team": "Norway", "code": "NOR", "points": 1651.29 },
+    { "rank": 20, "team": "Uruguay", "code": "URU", "points": 1634.71 },
+    { "rank": 21, "team": "Denmark", "code": "DEN", "points": 1619.47 },
+    { "rank": 22, "team": "IR Iran", "code": "IRN", "points": 1609.84 },
+    { "rank": 23, "team": "Austria", "code": "AUT", "points": 1598.82 },
+    { "rank": 24, "team": "Egypt", "code": "EGY", "points": 1597.05 },
+    { "rank": 25, "team": "Ecuador", "code": "ECU", "points": 1592.59 },
+    { "rank": 26, "team": "Nigeria", "code": "NGA", "points": 1585.02 },
+    { "rank": 27, "team": "Türkiye", "code": "TUR", "points": 1582.54 },
+    { "rank": 28, "team": "Australia", "code": "AUS", "points": 1581.51 },
+    { "rank": 29, "team": "Algeria", "code": "ALG", "points": 1576.80 },
+    { "rank": 30, "team": "Canada", "code": "CAN", "points": 1571.34 },
+    { "rank": 31, "team": "Côte d'Ivoire", "code": "CIV", "points": 1565.48 },
+    { "rank": 32, "team": "Korea Republic", "code": "KOR", "points": 1558.72 },
+    { "rank": 33, "team": "Ukraine", "code": "UKR", "points": 1549.29 },
+    { "rank": 34, "team": "Paraguay", "code": "PAR", "points": 1542.48 },
+    { "rank": 35, "team": "Russia", "code": "RUS", "points": 1529.60 },
+    { "rank": 36, "team": "Poland", "code": "POL", "points": 1526.18 },
+    { "rank": 37, "team": "Sweden", "code": "SWE", "points": 1525.58 },
+    { "rank": 38, "team": "Wales", "code": "WAL", "points": 1516.95 },
+    { "rank": 39, "team": "Hungary", "code": "HUN", "points": 1506.39 },
+    { "rank": 40, "team": "Serbia", "code": "SRB", "points": 1502.13 },
+    { "rank": 41, "team": "Congo DR", "code": "COD", "points": 1495.48 },
+    { "rank": 42, "team": "Scotland", "code": "SCO", "points": 1491.22 },
+    { "rank": 43, "team": "Cameroon", "code": "CMR", "points": 1481.24 },
+    { "rank": 44, "team": "Panama", "code": "PAN", "points": 1478.42 },
+    { "rank": 45, "team": "Slovakia", "code": "SVK", "points": 1473.66 },
+    { "rank": 46, "team": "Greece", "code": "GRE", "points": 1473.19 },
+    { "rank": 47, "team": "Venezuela", "code": "VEN", "points": 1469.18 },
+    { "rank": 48, "team": "Czechia", "code": "CZE", "points": 1467.26 },
+    { "rank": 49, "team": "Chile", "code": "CHI", "points": 1458.20 },
+    { "rank": 50, "team": "Peru", "code": "PER", "points": 1457.69 }
+  ]
