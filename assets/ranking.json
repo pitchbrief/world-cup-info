@@ -2,7 +2,7 @@
   "target": {
     "iso": "2030-06-06T18:00:00+07:00",
     "utc": "2030-06-06T11:00:00Z",
-    "label": "6 Juni 2030, 18:00 GMT+7",
+    "label": "6 Juni 2030, 18:00 GMT+7 Jakarta",
     "note": "Target waktu disimpan dalam UTC (\"utc\") supaya hasil hitung mundur konsisten untuk semua orang, di mana pun dan kapan pun mereka mengaksesnya. Nilai yang ditampilkan tinggal dikonversi ke timezone pilihan user."
   },
   "displayFormat": "DMJHBT",
