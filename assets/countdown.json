@@ -1,5 +1,4 @@
-{
-  "tournament": "FIFA World Cup 2030",
+"tournament": "FIFA World Cup 2030",
   "target": {
     "iso": "2030-06-06T18:00:00+07:00",
     "utc": "2030-06-06T11:00:00Z",
@@ -44,4 +43,3 @@
       { "city": "Tokyo", "offset": "GMT+9" }
     ]
   }
-}
