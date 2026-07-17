@@ -116,6 +116,46 @@ var OTHER_SVG = {
   home: '<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">' +
     '<path d="M50 15 L88 48 H78 V88 H58 V62 H42 V88 H22 V48 H12 Z" fill="#0B3D2E"/>' +
     '<rect x="42" y="62" width="16" height="26" fill="#D4AF37"/>' +
+    '</svg>',
+
+  // Ikon roda gigi untuk Settings
+  settings: '<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">' +
+    '<path d="M50 30a20 20 0 1 0 0.001 0Z" fill="none" stroke="currentColor" stroke-width="8"/>' +
+    '<circle cx="50" cy="50" r="8" fill="currentColor"/>' +
+    '<path d="M50 8 L54 20 L46 20 Z" fill="currentColor"/>' +
+    '<path d="M50 92 L54 80 L46 80 Z" fill="currentColor"/>' +
+    '<path d="M8 50 L20 46 L20 54 Z" fill="currentColor"/>' +
+    '<path d="M92 50 L80 46 L80 54 Z" fill="currentColor"/>' +
+    '<path d="M20 20 L30 26 L26 30 Z" fill="currentColor"/>' +
+    '<path d="M80 80 L70 74 L74 70 Z" fill="currentColor"/>' +
+    '<path d="M80 20 L70 26 L74 30 Z" fill="currentColor"/>' +
+    '<path d="M20 80 L30 74 L26 70 Z" fill="currentColor"/>' +
+    '</svg>',
+
+  // Ikon matahari (mode terang)
+  sun: '<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">' +
+    '<circle cx="50" cy="50" r="20" fill="currentColor"/>' +
+    '<g stroke="currentColor" stroke-width="7" stroke-linecap="round">' +
+    '<line x1="50" y1="8" x2="50" y2="20"/>' +
+    '<line x1="50" y1="80" x2="50" y2="92"/>' +
+    '<line x1="8" y1="50" x2="20" y2="50"/>' +
+    '<line x1="80" y1="50" x2="92" y2="50"/>' +
+    '<line x1="20" y1="20" x2="28" y2="28"/>' +
+    '<line x1="72" y1="72" x2="80" y2="80"/>' +
+    '<line x1="80" y1="20" x2="72" y2="28"/>' +
+    '<line x1="28" y1="72" x2="20" y2="80"/>' +
+    '</g></svg>',
+
+  // Ikon bulan (mode gelap)
+  moon: '<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">' +
+    '<path d="M68 15 A38 38 0 1 0 85 68 A30 30 0 0 1 68 15 Z" fill="currentColor"/>' +
+    '</svg>',
+
+  // Ikon monitor untuk pilihan "Ikuti Sistem"
+  system: '<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">' +
+    '<rect x="12" y="20" width="76" height="50" rx="6" fill="none" stroke="currentColor" stroke-width="7"/>' +
+    '<line x1="38" y1="86" x2="62" y2="86" stroke="currentColor" stroke-width="7" stroke-linecap="round"/>' +
+    '<line x1="50" y1="70" x2="50" y2="86" stroke="currentColor" stroke-width="7"/>' +
     '</svg>'
 };
 
