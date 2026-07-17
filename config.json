@@ -14,7 +14,28 @@
     { "label": "Wallchart", "href": "wallchart.html", "icon": "bracket" },
     { "label": "Countdown", "href": "countdown.html", "icon": "clock" },
     { "label": "Ranking", "href": "ranking.html", "icon": "ranking" },
-    { "label": "Docs", "href": "docs.html", "icon": "docs" }
+    { "label": "Docs", "href": "docs.html", "icon": "docs" },
+    { "label": "Settings", "href": "settings.html", "icon": "settings" }
+  ],
+  "settingsDefaults": {
+    "theme": "system",
+    "wallchartFormat": "64",
+    "timezoneOffsetMinutes": 420,
+    "timezoneLabel": "Jakarta (GMT+7)"
+  },
+  "timezonePresets": [
+    { "label": "Jakarta (GMT+7)", "offset": 420 },
+    { "label": "Rabat (GMT+1)", "offset": 60 },
+    { "label": "Lisbon (GMT+1)", "offset": 60 },
+    { "label": "Madrid (GMT+2)", "offset": 120 },
+    { "label": "Montevideo (GMT-3)", "offset": -180 },
+    { "label": "Buenos Aires (GMT-3)", "offset": -180 },
+    { "label": "Asuncion (GMT-4)", "offset": -240 },
+    { "label": "London (GMT+1)", "offset": 60 },
+    { "label": "New York (GMT-4)", "offset": -240 },
+    { "label": "Tokyo (GMT+9)", "offset": 540 },
+    { "label": "Sydney (GMT+10)", "offset": 600 },
+    { "label": "UTC (GMT+0)", "offset": 0 }
   ],
   "theme": {
     "colorPrimary": "#0B3D2E",
