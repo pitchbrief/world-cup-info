@@ -1,1 +1,389 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Countdown WC 2030 — World Cup Info's</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  /* CSS + JS khusus halaman countdown.html — self-contained */
 
+  .countdown-hero {
+    text-align: center;
+    padding: 40px 0 10px;
+  }
+
+  .countdown-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 12px;
+    max-width: 900px;
+    margin: 36px auto;
+  }
+
+  @media (max-width: 760px) {
+    .countdown-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  .cd-unit {
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-soft);
+    padding: 18px 6px;
+    text-align: center;
+  }
+
+  .cd-unit-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    margin-top: 8px;
+  }
+
+  .cd-digits {
+    display: flex;
+    justify-content: center;
+    gap: 3px;
+  }
+
+  .cd-digit-window {
+    position: relative;
+    width: 32px;
+    height: 44px;
+    overflow: hidden;
+    background: var(--color-primary);
+    border-radius: var(--radius-sm);
+  }
+
+  .cd-digit-strip {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .cd-digit-strip span {
+    height: 44px;
+    line-height: 44px;
+    font-size: 24px;
+    font-weight: 800;
+    color: #FFFFFF;
+    text-align: center;
+  }
+
+  .timezone-bar {
+    max-width: 560px;
+    margin: 0 auto 10px;
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-soft);
+    padding: 18px 20px;
+  }
+
+  .timezone-bar label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .timezone-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .timezone-row select,
+  .timezone-row input {
+    flex: 1;
+    min-width: 140px;
+    padding: 10px 12px;
+    border-radius: var(--radius-sm);
+    border: 1.5px solid var(--color-border);
+    font-size: 14px;
+    background: var(--color-surface-alt);
+  }
+
+  .target-label {
+    text-align: center;
+    font-size: 14px;
+    color: var(--color-text-muted);
+    margin-top: 18px;
+  }
+
+  .target-label strong {
+    color: var(--color-primary);
+  }
+
+  .lock-status-strip {
+    max-width: 560px;
+    margin: 22px auto 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .lock-status-strip .status-icon {
+    width: 22px;
+    height: 22px;
+  }
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a href="index.html" class="navbar-brand">
+      <span class="brand-icon" id="brand-icon-slot"></span>
+      World Cup Info's
+    </a>
+    <button class="navbar-toggle" id="navbar-toggle-btn">☰</button>
+    <div class="navbar-links" id="navbar-links"></div>
+  </div>
+</nav>
+
+<div class="page-shell">
+
+  <div class="countdown-hero">
+    <div class="hero-badge">⏳ Countdown</div>
+    <h1 style="font-size:32px;color:var(--color-primary);font-weight:900;">Menuju FIFA World Cup 2030</h1>
+    <p style="color:var(--color-text-muted);margin-top:8px;">Hitung mundur ke kick-off resmi turnamen.</p>
+  </div>
+
+  <div class="timezone-bar">
+    <label>Zona Waktu</label>
+    <div class="timezone-row">
+      <select id="tz-preset"></select>
+      <input type="text" id="tz-custom" placeholder="Atau ketik offset manual, misal GMT+3">
+    </div>
+  </div>
+
+  <div class="countdown-grid" id="countdown-grid"></div>
+
+  <p class="target-label">Target: <strong id="target-label-text">memuat…</strong></p>
+
+  <div class="lock-status-strip">
+    <span class="status-icon" id="lock-icon-strip"></span>
+    <span id="lock-text-strip">Memeriksa status Wallchart…</span>
+  </div>
+
+</div>
+
+<footer class="footer">
+  <p>World Cup Info's — proyek fan-made, tidak berafiliasi resmi dengan FIFA. Dibuat oleh <a href="https://github.com/pitchbrief" target="_blank" rel="noopener">pitchbrief</a>.</p>
+</footer>
+
+<script src="assets/other.js"></script>
+<script>
+  /* ---- Navbar ---- */
+  fetch('config.json').then(function (r) { return r.json(); }).then(function (cfg) {
+    document.getElementById('brand-icon-slot').innerHTML = OTHER_SVG.wc2030Logo;
+    var linksWrap = document.getElementById('navbar-links');
+    var html = '';
+    cfg.nav.forEach(function (item) {
+      var isActive = item.href === 'countdown.html';
+      html += '<a class="navbar-link' + (isActive ? ' active' : '') + '" href="' + item.href + '">' +
+        '<span class="nav-icon">' + (OTHER_SVG[item.icon] || '') + '</span>' + item.label + '</a>';
+    });
+    linksWrap.innerHTML = html;
+  });
+  document.getElementById('navbar-toggle-btn').addEventListener('click', function () {
+    document.getElementById('navbar-links').classList.toggle('open');
+  });
+
+  /* ---- Countdown Logic (odometer style) ---- */
+  var UNIT_ORDER = ["years", "months", "days", "hours", "minutes", "seconds"];
+  var UNIT_LABEL = { years: "Tahun", months: "Bulan", days: "Hari", hours: "Jam", minutes: "Menit", seconds: "Detik" };
+  var UNIT_DIGITS = { years: 2, months: 2, days: 3, hours: 2, minutes: 2, seconds: 2 };
+
+  var targetUtcDate = null;
+  var currentOffsetMinutes = 7 * 60; // default GMT+7
+  var prevValues = {};
+
+  var TZ_PRESETS = [
+    { label: "Jakarta (GMT+7)", offset: 7 * 60 },
+    { label: "Rabat (GMT+1)", offset: 1 * 60 },
+    { label: "Lisbon (GMT+1)", offset: 1 * 60 },
+    { label: "Madrid (GMT+2)", offset: 2 * 60 },
+    { label: "Montevideo (GMT-3)", offset: -3 * 60 },
+    { label: "Buenos Aires (GMT-3)", offset: -3 * 60 },
+    { label: "Asuncion (GMT-4)", offset: -4 * 60 },
+    { label: "London (GMT+1)", offset: 1 * 60 },
+    { label: "New York (GMT-4)", offset: -4 * 60 },
+    { label: "Tokyo (GMT+9)", offset: 9 * 60 },
+    { label: "Sydney (GMT+10)", offset: 10 * 60 },
+    { label: "UTC (GMT+0)", offset: 0 }
+  ];
+
+  function buildGrid() {
+    var grid = document.getElementById('countdown-grid');
+    grid.innerHTML = '';
+    UNIT_ORDER.forEach(function (key) {
+      var unitBox = document.createElement('div');
+      unitBox.className = 'cd-unit';
+      var digitsCount = UNIT_DIGITS[key];
+      var digitsHtml = '<div class="cd-digits" id="digits-' + key + '">';
+      for (var i = 0; i < digitsCount; i++) {
+        digitsHtml += '<div class="cd-digit-window"><div class="cd-digit-strip" id="strip-' + key + '-' + i + '">' + buildStrip(0) + '</div></div>';
+      }
+      digitsHtml += '</div>';
+      unitBox.innerHTML = digitsHtml + '<div class="cd-unit-label">' + UNIT_LABEL[key] + '</div>';
+      grid.appendChild(unitBox);
+    });
+  }
+
+  function buildStrip(startDigit) {
+    // strip berisi angka startDigit di posisi teratas (yang terlihat)
+    var html = '';
+    for (var n = 0; n < 10; n++) {
+      html += '<span>' + ((startDigit + n) % 10) + '</span>';
+    }
+    return html;
+  }
+
+  function setDigit(unitKey, digitIndex, value) {
+    var stripId = 'strip-' + unitKey + '-' + digitIndex;
+    var strip = document.getElementById(stripId);
+    if (!strip) { return; }
+    var offsetPx = value * 44;
+    strip.style.transform = 'translateY(-' + offsetPx + 'px)';
+  }
+
+  function updateUnitValue(unitKey, value) {
+    var digitsCount = UNIT_DIGITS[unitKey];
+    var str = String(Math.max(0, value));
+    while (str.length < digitsCount) { str = '0' + str; }
+    if (str.length > digitsCount) { str = str.slice(str.length - digitsCount); }
+    for (var i = 0; i < digitsCount; i++) {
+      setDigit(unitKey, i, parseInt(str[i], 10));
+    }
+  }
+
+  function computeDiff(targetDate, offsetMinutes) {
+    var nowUtcMs = Date.now();
+    var targetMs = targetDate.getTime();
+    var diffMs = targetMs - nowUtcMs;
+    if (diffMs < 0) { diffMs = 0; }
+
+    var totalSeconds = Math.floor(diffMs / 1000);
+    var seconds = totalSeconds % 60;
+    var totalMinutes = Math.floor(totalSeconds / 60);
+    var minutes = totalMinutes % 60;
+    var totalHours = Math.floor(totalMinutes / 60);
+    var hours = totalHours % 24;
+    var totalDaysRaw = Math.floor(totalHours / 24);
+
+    // Perkiraan pemisahan tahun/bulan/hari secara kalender (bukan cuma pembagian tetap)
+    var now = new Date();
+    var years = targetDate.getUTCFullYear() - now.getUTCFullYear();
+    var months = targetDate.getUTCMonth() - now.getUTCMonth();
+    var days = targetDate.getUTCDate() - now.getUTCDate();
+
+    if (days < 0) {
+      months -= 1;
+      var prevMonthDate = new Date(Date.UTC(targetDate.getUTCFullYear(), targetDate.getUTCMonth(), 0));
+      days += prevMonthDate.getUTCDate();
+    }
+    if (months < 0) {
+      years -= 1;
+      months += 12;
+    }
+    if (years < 0) { years = 0; months = 0; days = 0; }
+
+    return {
+      years: years, months: months, days: days,
+      hours: hours, minutes: minutes, seconds: seconds
+    };
+  }
+
+  function tick() {
+    if (!targetUtcDate) { return; }
+    var diff = computeDiff(targetUtcDate, currentOffsetMinutes);
+    UNIT_ORDER.forEach(function (key) {
+      if (prevValues[key] !== diff[key]) {
+        updateUnitValue(key, diff[key]);
+        prevValues[key] = diff[key];
+      }
+    });
+  }
+
+  function formatTargetLabel(cfg, offsetMinutes) {
+    var totalHourOffset = offsetMinutes / 60;
+    var sign = totalHourOffset >= 0 ? '+' : '';
+    var localMs = targetUtcDate.getTime() + offsetMinutes * 60000;
+    var localDate = new Date(localMs);
+    var pad = function (n) { return n < 10 ? '0' + n : n; };
+    var dateStr = pad(localDate.getUTCDate()) + '/' + pad(localDate.getUTCMonth() + 1) + '/' + localDate.getUTCFullYear();
+    var timeStr = pad(localDate.getUTCHours()) + ':' + pad(localDate.getUTCMinutes());
+    return dateStr + ', ' + timeStr + ' (GMT' + sign + totalHourOffset + ')';
+  }
+
+  function setupTimezoneSelector() {
+    var presetSelect = document.getElementById('tz-preset');
+    TZ_PRESETS.forEach(function (p, idx) {
+      var opt = document.createElement('option');
+      opt.value = p.offset;
+      opt.textContent = p.label;
+      if (p.offset === currentOffsetMinutes) { opt.selected = true; }
+      presetSelect.appendChild(opt);
+    });
+    presetSelect.addEventListener('change', function () {
+      currentOffsetMinutes = parseInt(presetSelect.value, 10);
+      document.getElementById('tz-custom').value = '';
+      refreshTargetLabel();
+    });
+
+    document.getElementById('tz-custom').addEventListener('input', function (e) {
+      var val = e.target.value.trim();
+      var match = val.match(/GMT?\s*([+-]?\d{1,2})/i) || val.match(/^([+-]?\d{1,2})$/);
+      if (match) {
+        var hourOffset = parseInt(match[1], 10);
+        if (!isNaN(hourOffset) && hourOffset >= -12 && hourOffset <= 14) {
+          currentOffsetMinutes = hourOffset * 60;
+          refreshTargetLabel();
+        }
+      }
+    });
+  }
+
+  function refreshTargetLabel() {
+    document.getElementById('target-label-text').textContent = formatTargetLabel(null, currentOffsetMinutes);
+  }
+
+  buildGrid();
+  setupTimezoneSelector();
+
+  fetch('assets/countdown.json').then(function (r) { return r.json(); }).then(function (cd) {
+    targetUtcDate = new Date(cd.target.utc);
+    refreshTargetLabel();
+    tick();
+    setInterval(tick, 1000);
+
+    var now = new Date();
+    var locked = now < targetUtcDate;
+    var iconEl = document.getElementById('lock-icon-strip');
+    var textEl = document.getElementById('lock-text-strip');
+    if (locked) {
+      iconEl.innerHTML = OTHER_SVG.lockClosed;
+      textEl.textContent = 'Wallchart WC 2030 masih terkunci sampai countdown ini berakhir.';
+      textEl.style.color = '#374151';
+    } else {
+      iconEl.innerHTML = OTHER_SVG.lockOpen;
+      textEl.textContent = 'Wallchart WC 2030 sudah terbuka!';
+      textEl.style.color = '#0D8F63';
+    }
+  });
+</script>
+</body>
+</html>
