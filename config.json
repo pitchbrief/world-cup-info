@@ -1,1 +1,43 @@
-
+{
+  "siteName": "World Cup Info's",
+  "shortName": "WC Info's",
+  "tagline": "Info lengkap FIFA World Cup 2030 — wallchart, countdown, ranking, dan lainnya",
+  "account": {
+    "username": "pitchbrief",
+    "displayName": "PitchBrief",
+    "bio": "Ringkasan & info seputar dunia sepak bola internasional — jadwal, ranking, dan momen turnamen dunia, disajikan simpel.",
+    "github": "https://github.com/pitchbrief",
+    "repo": "https://github.com/pitchbrief/world-cup-info"
+  },
+  "nav": [
+    { "label": "Home", "href": "index.html", "icon": "home" },
+    { "label": "Wallchart", "href": "wallchart.html", "icon": "bracket" },
+    { "label": "Countdown", "href": "countdown.html", "icon": "clock" },
+    { "label": "Ranking", "href": "ranking.html", "icon": "ranking" },
+    { "label": "Docs", "href": "docs.html", "icon": "docs" }
+  ],
+  "theme": {
+    "colorPrimary": "#0B3D2E",
+    "colorPrimaryLight": "#10603F",
+    "colorAccent": "#D4AF37",
+    "colorNavy": "#0B2545",
+    "colorBg": "#F5F7F6",
+    "colorSurface": "#FFFFFF",
+    "font": "Inter",
+    "designLanguage": "iOS 26 (tanpa Liquid Glass)"
+  },
+  "wallchart": {
+    "defaultFormat": "64",
+    "availableFormats": ["48", "64"],
+    "dataFile": "assets/wallchart.json"
+  },
+  "countdown": {
+    "dataFile": "assets/countdown.json",
+    "defaultTimezone": "Asia/Jakarta"
+  },
+  "ranking": {
+    "dataFile": "assets/ranking.json",
+    "scope": "Top 50"
+  },
+  "disclaimer": "World Cup Info's adalah proyek independen/fan-made, tidak berafiliasi resmi dengan FIFA."
+}
