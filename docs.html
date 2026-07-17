@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Docs — World Cup Info's</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  .docs-wrap {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .qna-item {
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-soft);
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+
+  .qna-question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 22px;
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--color-primary);
+  }
+
+  .qna-question .qna-chevron {
+    transition: transform 0.2s ease;
+    color: var(--color-text-muted);
+    font-weight: 400;
+  }
+
+  .qna-item.open .qna-chevron {
+    transform: rotate(180deg);
+  }
+
+  .qna-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.25s ease;
+    padding: 0 22px;
+    font-size: 14px;
+    color: var(--color-text-muted);
+    line-height: 1.65;
+  }
+
+  .qna-item.open .qna-answer {
+    padding-bottom: 20px;
+  }
+
+  .profile-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-soft);
+    padding: 24px;
+    margin-bottom: 30px;
+  }
+
+  .profile-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .profile-avatar svg { width: 100%; height: 100%; }
+
+  .profile-info h3 {
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--color-primary);
+  }
+
+  .profile-info p {
+    font-size: 13px;
+    color: var(--color-text-muted);
+    margin-top: 2px;
+  }
+
+  .profile-info a {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--color-accent);
+  }
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a href="index.html" class="navbar-brand">
+      <span class="brand-icon" id="brand-icon-slot"></span>
+      World Cup Info's
+    </a>
+    <button class="navbar-toggle" id="navbar-toggle-btn">☰</button>
+    <div class="navbar-links" id="navbar-links"></div>
+  </div>
+</nav>
+
+<div class="page-shell">
+
+  <div class="hero" style="padding:36px 0 24px;">
+    <div class="hero-badge">📄 WC Info's Docs</div>
+    <h1 style="font-size:32px;">Pertanyaan yang Sering Diajukan</h1>
+    <p>Semua yang perlu kamu tahu soal World Cup Info's.</p>
+  </div>
+
+  <div class="docs-wrap">
+
+    <div class="profile-card">
+      <div class="profile-avatar" id="profile-avatar-slot"></div>
+      <div class="profile-info">
+        <h3 id="profile-name">PitchBrief</h3>
+        <p id="profile-bio">Ringkasan & info seputar dunia sepak bola internasional.</p>
+        <a href="https://github.com/pitchbrief" target="_blank" rel="noopener" id="profile-link">github.com/pitchbrief</a>
+      </div>
+    </div>
+
+    <div id="qna-container"></div>
+
+  </div>
+
+</div>
+
+<footer class="footer">
+  <p>World Cup Info's — proyek fan-made, tidak berafiliasi resmi dengan FIFA. Dibuat oleh <a href="https://github.com/pitchbrief" target="_blank" rel="noopener">pitchbrief</a>.</p>
+</footer>
+
+<script src="assets/other.js"></script>
+<script>
+  /* ---- Navbar ---- */
+  fetch('config.json').then(function (r) { return r.json(); }).then(function (cfg) {
+    document.getElementById('brand-icon-slot').innerHTML = OTHER_SVG.wc2030Logo;
+    document.getElementById('profile-avatar-slot').innerHTML = OTHER_SVG.wc2030Logo;
+    document.getElementById('profile-name').textContent = cfg.account.displayName;
+    document.getElementById('profile-bio').textContent = cfg.account.bio;
+    document.getElementById('profile-link').textContent = 'github.com/' + cfg.account.username;
+    document.getElementById('profile-link').href = cfg.account.github;
+
+    var linksWrap = document.getElementById('navbar-links');
+    var html = '';
+    cfg.nav.forEach(function (item) {
+      var isActive = item.href === 'docs.html';
+      html += '<a class="navbar-link' + (isActive ? ' active' : '') + '" href="' + item.href + '">' +
+        '<span class="nav-icon">' + (OTHER_SVG[item.icon] || '') + '</span>' + item.label + '</a>';
+    });
+    linksWrap.innerHTML = html;
+  });
+  document.getElementById('navbar-toggle-btn').addEventListener('click', function () {
+    document.getElementById('navbar-links').classList.toggle('open');
+  });
+
+  /* ---- QnA Content ---- */
+  var QNA = [
+    {
+      q: "Apa itu World Cup Info's?",
+      a: "World Cup Info's adalah website informasi seputar FIFA World Cup, khususnya edisi 2030. Berisi Wallchart interaktif, Countdown, FIFA Ranking, dan halaman Docs seperti ini."
+    },
+    {
+      q: "Apakah website ini resmi dari FIFA?",
+      a: "Bukan. World Cup Info's adalah proyek independen/fan-made yang dibuat untuk tujuan informasi, dan tidak berafiliasi secara resmi dengan FIFA maupun organisasi sepak bola internasional manapun."
+    },
+    {
+      q: "Kenapa Wallchart formatnya bisa 48 tim atau 64 tim?",
+      a: "Format resmi FIFA World Cup 2030 saat ini masih 48 tim (sama seperti WC 2026). Namun ada wacana perluasan ke 64 tim untuk merayakan 100 tahun World Cup, yang diusulkan CONMEBOL dan sedang dipertimbangkan FIFA. Karena belum final, Wallchart di sini menyediakan kedua simulasi formatnya."
+    },
+    {
+      q: "Kenapa banyak nama tim masih 'TBD'?",
+      a: "Karena proses kualifikasi FIFA World Cup 2030 baru akan dimulai sekitar tahun 2027. Saat ini baru 6 negara tuan rumah (Maroko, Portugal, Spanyol, Uruguay, Argentina, Paraguay) yang otomatis lolos tanpa kualifikasi."
+    },
+    {
+      q: "Apakah skor yang saya isi di Wallchart tersimpan?",
+      a: "Ya, skor yang kamu isi disimpan otomatis di penyimpanan lokal browser kamu (localStorage), jadi tetap ada meski halaman ditutup dan dibuka lagi di perangkat yang sama."
+    },
+    {
+      q: "Kapan FIFA World Cup 2030 dimulai?",
+      a: "Berdasarkan estimasi jadwal turnamen, kick-off diperkirakan pada 6 Juni 2030. Kamu bisa memantau hitung mundurnya secara real-time di halaman Countdown."
+    },
+    {
+      q: "Data FIFA Ranking di halaman ini dari mana?",
+      a: "Data ranking dikompilasi dari sumber publik (kalkulator ranking FIFA tidak resmi) untuk keperluan informasi. Angka bisa sedikit berbeda dari situs resmi FIFA."
+    },
+    {
+      q: "Siapa yang membuat website ini?",
+      a: "World Cup Info's dikembangkan oleh akun GitHub pitchbrief sebagai proyek open-source yang di-hosting via GitHub Pages."
+    },
+    {
+      q: "Apakah saya bisa berkontribusi ke project ini?",
+      a: "Tentu — karena project ini bersifat open-source, kamu bisa cek repository-nya di GitHub dan mengajukan kontribusi lewat pull request."
+    },
+    {
+      q: "Kenapa bendera di ranking terlihat sederhana?",
+      a: "Bendera digambar ulang secara geometris sederhana (bukan aset/foto resmi) supaya ringan dan aman dari isu hak cipta, sambil tetap mudah dikenali warna & pola khasnya."
+    }
+  ];
+
+  var qnaWrap = document.getElementById('qna-container');
+  var html = '';
+  QNA.forEach(function (item, idx) {
+    html += '<div class="qna-item" id="qna-' + idx + '">' +
+      '<div class="qna-question">' + item.q + '<span class="qna-chevron">⌄</span></div>' +
+      '<div class="qna-answer">' + item.a + '</div>' +
+      '</div>';
+  });
+  qnaWrap.innerHTML = html;
+
+  QNA.forEach(function (item, idx) {
+    var el = document.getElementById('qna-' + idx);
+    var question = el.querySelector('.qna-question');
+    var answer = el.querySelector('.qna-answer');
+    question.addEventListener('click', function () {
+      var isOpen = el.classList.contains('open');
+      document.querySelectorAll('.qna-item').forEach(function (other) {
+        other.classList.remove('open');
+        other.querySelector('.qna-answer').style.maxHeight = null;
+      });
+      if (!isOpen) {
+        el.classList.add('open');
+        answer.style.maxHeight = answer.scrollHeight + 40 + 'px';
+      }
+    });
+  });
+</script>
+</body>
+</html>
