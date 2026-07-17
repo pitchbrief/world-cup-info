@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Settings — World Cup Info's</title>
+<script>
+  // Anti-flash: terapkan tema sebelum CSS/DOM lain dirender
+  (function () {
+    try {
+      var raw = localStorage.getItem("wcinfo30_settings_v1");
+      var s = raw ? JSON.parse(raw) : {};
+      var theme = s.theme || "system";
+      var resolved = theme === "system"
+        ? (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
+        : theme;
+      document.documentElement.setAttribute("data-theme", resolved);
+    } catch (e) {}
+  })();
+</script>
+<link rel="stylesheet" href="style.css">
+<style>
+  .settings-wrap {
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  .flag-lookup-result {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 12px;
+    font-weight: 700;
+  }
+
+  .flag-lookup-result .flag-icon {
+    width: 36px;
+    height: 24px;
+  }
+
+  .flag-lookup-input {
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: var(--radius-pill);
+    border: 1.5px solid var(--color-border);
+    background: var(--color-surface-alt);
+    font-size: 14px;
+  }
+
+  .settings-version {
+    text-align: center;
+    font-size: 12px;
+    color: var(--color-text-muted);
+    margin-top: 20px;
+  }
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a href="index.html" class="navbar-brand">
+      <span class="brand-icon" id="brand-icon-slot"></span>
+      World Cup Info's
+    </a>
+    <button class="navbar-toggle" id="navbar-toggle-btn">☰</button>
+    <div class="navbar-links" id="navbar-links"></div>
+  </div>
+</nav>
+
+<div class="page-shell">
+
+  <div class="hero" style="padding:36px 0 24px;">
+    <div class="hero-badge">⚙️ Settings</div>
+    <h1 style="font-size:32px;">Pengaturan</h1>
+    <p>Sesuaikan tampilan dan preferensi default World Cup Info's.</p>
+  </div>
+
+  <div class="settings-wrap">
+
+    <div class="settings-section">
+      <h3>Tampilan</h3>
+      <p class="settings-desc">Pilih mode tampilan yang nyaman buat kamu.</p>
+      <div class="settings-row">
+        <div>
+          <div class="settings-row-label">Tema</div>
+          <div class="settings-row-sub">Terang, gelap, atau ikuti sistem perangkat.</div>
+        </div>
+        <div class="segmented" id="theme-segmented"></div>
+      </div>
+      <div class="settings-row">
+        <div>
+          <div class="settings-row-label">Kurangi Animasi</div>
+          <div class="settings-row-sub">Matikan animasi odometer countdown & efek hover kartu.</div>
+        </div>
+        <span class="toggle" id="reduce-motion-toggle"><span class="toggle-knob"></span></span>
+      </div>
+    </div>
+
+    <div class="settings-section">
+      <h3>Wallchart</h3>
+      <p class="settings-desc">Format default yang dimuat saat membuka halaman Wallchart.</p>
+      <div class="settings-row">
+        <div class="settings-row-label">Format Default</div>
+        <div class="segmented" id="format-segmented">
+          <button data-value="48">48 Tim</button>
+          <button data-value="64">64 Tim</button>
+        </div>
+      </div>
+      <div class="settings-row">
+        <div>
+          <div class="settings-row-label">Reset Data Wallchart</div>
+          <div class="settings-row-sub">Hapus semua skor, kartu, dan penalti yang sudah kamu isi.</div>
+        </div>
+        <button class="settings-danger-btn" id="reset-wallchart-btn">Reset Sekarang</button>
+      </div>
+    </div>
+
+    <div class="settings-section">
+      <h3>Countdown</h3>
+      <p class="settings-desc">Zona waktu default yang ditampilkan di halaman Countdown.</p>
+      <div class="settings-row">
+        <div class="settings-row-label">Zona Waktu Default</div>
+        <select class="settings-select" id="timezone-select"></select>
+      </div>
+    </div>
+
+    <div class="settings-section">
+      <h3>Cari Bendera</h3>
+      <p class="settings-desc">Ketik nama negara atau kode FIFA 3-huruf (contoh: "MEX", "JPN", "BRA").</p>
+      <input type="text" class="flag-lookup-input" id="flag-lookup-input" placeholder="Ketik kode atau nama negara...">
+      <div id="flag-lookup-result"></div>
+    </div>
+
+    <div class="settings-section">
+      <h3>Reset Semua Data</h3>
+      <p class="settings-desc">Menghapus seluruh preferensi Settings dan data Wallchart sekaligus.</p>
+      <button class="settings-danger-btn" id="reset-all-btn">Reset Semua</button>
+    </div>
+
+    <p class="settings-version">World Cup Info's · dikelola oleh pitchbrief</p>
+
+  </div>
+
+</div>
+
+<footer class="footer">
+  <p>World Cup Info's — proyek fan-made, tidak berafiliasi resmi dengan FIFA. Dibuat oleh <a href="https://github.com/pitchbrief" target="_blank" rel="noopener">pitchbrief</a>.</p>
+</footer>
+
+<script src="assets/flags-data.js"></script>
+<script src="assets/other.js"></script>
+<script src="assets/theme.js"></script>
+<script>
+  /* ---- Navbar ---- */
+  fetch('config.json').then(function (r) { return r.json(); }).then(function (cfg) {
+    document.getElementById('brand-icon-slot').innerHTML = OTHER_SVG.wc2030Logo;
+    var linksWrap = document.getElementById('navbar-links');
+    var html = '';
+    cfg.nav.forEach(function (item) {
+      var isActive = item.href === 'settings.html';
+      html += '<a class="navbar-link' + (isActive ? ' active' : '') + '" href="' + item.href + '">' +
+        '<span class="nav-icon">' + (OTHER_SVG[item.icon] || '') + '</span>' + item.label + '</a>';
+    });
+    linksWrap.innerHTML = html;
+
+    setupTimezoneSelect(cfg.timezonePresets);
+  });
+  document.getElementById('navbar-toggle-btn').addEventListener('click', function () {
+    document.getElementById('navbar-links').classList.toggle('open');
+  });
+
+  /* ---- Theme Segmented Control ---- */
+  var THEME_OPTIONS = [
+    { value: "light", label: "Terang", icon: "sun" },
+    { value: "dark", label: "Gelap", icon: "moon" },
+    { value: "system", label: "Sistem", icon: "system" }
+  ];
+
+  function renderThemeSegmented() {
+    var wrap = document.getElementById('theme-segmented');
+    var current = WCSettings.get('theme');
+    var html = '';
+    THEME_OPTIONS.forEach(function (opt) {
+      html += '<button data-value="' + opt.value + '" class="' + (current === opt.value ? 'active' : '') + '">' +
+        OTHER_SVG[opt.icon] + opt.label + '</button>';
+    });
+    wrap.innerHTML = html;
+    wrap.querySelectorAll('button').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        WCSettings.set('theme', btn.getAttribute('data-value'));
+        renderThemeSegmented();
+      });
+    });
+  }
+  renderThemeSegmented();
+
+  /* ---- Reduce Motion Toggle ---- */
+  var reduceMotionToggle = document.getElementById('reduce-motion-toggle');
+  function renderReduceMotion() {
+    var val = WCSettings.get('reduceMotion');
+    reduceMotionToggle.classList.toggle('active', !!val);
+  }
+  reduceMotionToggle.addEventListener('click', function () {
+    var current = WCSettings.get('reduceMotion');
+    WCSettings.set('reduceMotion', !current);
+    renderReduceMotion();
+  });
+  renderReduceMotion();
+
+  /* ---- Wallchart Format Default ---- */
+  function renderFormatSegmented() {
+    var current = WCSettings.get('wallchartFormat');
+    document.querySelectorAll('#format-segmented button').forEach(function (btn) {
+      btn.classList.toggle('active', btn.getAttribute('data-value') === current);
+    });
+  }
+  document.querySelectorAll('#format-segmented button').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      WCSettings.set('wallchartFormat', btn.getAttribute('data-value'));
+      renderFormatSegmented();
+    });
+  });
+  renderFormatSegmented();
+
+  document.getElementById('reset-wallchart-btn').addEventListener('click', function () {
+    if (confirm('Yakin mau reset semua skor & data Wallchart? Tindakan ini tidak bisa dibatalkan.')) {
+      localStorage.removeItem('wcinfo30_wallchart_state_v1');
+      alert('Data Wallchart berhasil direset.');
+    }
+  });
+
+  document.getElementById('reset-all-btn').addEventListener('click', function () {
+    if (confirm('Yakin mau reset SEMUA data (Settings + Wallchart)? Tindakan ini tidak bisa dibatalkan.')) {
+      localStorage.removeItem('wcinfo30_wallchart_state_v1');
+      localStorage.removeItem('wcinfo30_settings_v1');
+      alert('Semua data berhasil direset. Halaman akan dimuat ulang.');
+      window.location.reload();
+    }
+  });
+
+  /* ---- Timezone Select ---- */
+  function setupTimezoneSelect(presets) {
+    var select = document.getElementById('timezone-select');
+    var currentOffset = WCSettings.get('timezoneOffsetMinutes');
+    var html = '';
+    presets.forEach(function (p) {
+      html += '<option value="' + p.offset + '"' + (p.offset === currentOffset ? ' selected' : '') + '>' + p.label + '</option>';
+    });
+    select.innerHTML = html;
+    select.addEventListener('change', function () {
+      var offset = parseInt(select.value, 10);
+      var label = presets.filter(function (p) { return p.offset === offset; })[0];
+      WCSettings.set('timezoneOffsetMinutes', offset);
+      WCSettings.set('timezoneLabel', label ? label.label : '');
+    });
+  }
+
+  /* ---- Flag Lookup ---- */
+  document.getElementById('flag-lookup-input').addEventListener('input', function (e) {
+    var q = e.target.value.trim();
+    var resultWrap = document.getElementById('flag-lookup-result');
+    if (!q) { resultWrap.innerHTML = ''; return; }
+    var matches = searchTeams(q);
+    if (matches.length === 0) {
+      resultWrap.innerHTML = '<p style="color:var(--color-text-muted);font-size:13px;margin-top:10px;">Negara tidak ditemukan.</p>';
+      return;
+    }
+    var html = '';
+    matches.forEach(function (m) {
+      var flag = getFlag(m.code) || '';
+      html += '<div class="flag-lookup-result"><span class="flag-icon">' + flag + '</span>' + m.name + ' (' + m.code + ')</div>';
+    });
+    resultWrap.innerHTML = html;
+  });
+</script>
+</body>
+</html>
