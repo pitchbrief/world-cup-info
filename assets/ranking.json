@@ -1,4 +1,4 @@
-
+{
   "title": "FIFA Men's World Ranking",
   "scope": "Top 50",
   "periodLabel": "20 Juli 2026",
@@ -58,3 +58,4 @@
     { "rank": 49, "team": "Chile", "code": "CHI", "points": 1458.20 },
     { "rank": 50, "team": "Peru", "code": "PER", "points": 1457.69 }
   ]
+}
