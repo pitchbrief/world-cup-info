@@ -1,1 +1,339 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>World Cup Info's — Info Lengkap FIFA World Cup 2030</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  .home-hero {
+    text-align: center;
+    padding: 60px 0 30px;
+  }
 
+  .home-hero .logo-slot {
+    width: 96px;
+    height: 96px;
+    margin: 0 auto 20px;
+  }
+
+  .home-stats {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    margin: 30px 0 10px;
+  }
+
+  .home-stat {
+    text-align: center;
+  }
+
+  .home-stat .stat-value {
+    font-size: 26px;
+    font-weight: 900;
+    color: var(--color-primary);
+  }
+
+  .home-stat .stat-label {
+    font-size: 12px;
+    color: var(--color-text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+
+  .mini-countdown {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 26px 0;
+    flex-wrap: wrap;
+  }
+
+  .mini-cd-box {
+    background: var(--color-primary);
+    color: #FFFFFF;
+    border-radius: var(--radius-md);
+    padding: 12px 16px;
+    min-width: 64px;
+    text-align: center;
+  }
+
+  .mini-cd-box .mini-cd-value {
+    font-size: 22px;
+    font-weight: 900;
+  }
+
+  .mini-cd-box .mini-cd-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    opacity: 0.8;
+  }
+
+  .feature-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .feature-card .card-cta {
+    margin-top: auto;
+    padding-top: 14px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--color-accent);
+  }
+
+  .host-strip {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin: 24px 0 8px;
+  }
+
+  .host-chip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--color-surface);
+    border-radius: var(--radius-pill);
+    padding: 8px 16px;
+    box-shadow: var(--shadow-soft);
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .host-chip .flag-icon {
+    width: 22px;
+    height: 15px;
+  }
+
+  .mini-rank-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .mini-rank-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 4px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .mini-rank-row .mrn {
+    width: 22px;
+    font-weight: 900;
+    color: var(--color-accent);
+  }
+
+  .mini-rank-row .flag-icon {
+    width: 22px;
+    height: 15px;
+  }
+
+  .home-qna-preview .qna-mini {
+    background: var(--color-surface);
+    border-radius: var(--radius-md);
+    padding: 16px 18px;
+    margin-bottom: 10px;
+    box-shadow: var(--shadow-soft);
+  }
+
+  .home-qna-preview .qna-mini h4 {
+    font-size: 14px;
+    color: var(--color-primary);
+    margin-bottom: 4px;
+  }
+
+  .home-qna-preview .qna-mini p {
+    font-size: 13px;
+    color: var(--color-text-muted);
+  }
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a href="index.html" class="navbar-brand">
+      <span class="brand-icon" id="brand-icon-slot"></span>
+      World Cup Info's
+    </a>
+    <button class="navbar-toggle" id="navbar-toggle-btn">☰</button>
+    <div class="navbar-links" id="navbar-links"></div>
+  </div>
+</nav>
+
+<div class="page-shell">
+
+  <div class="home-hero">
+    <div class="logo-slot" id="home-logo-slot"></div>
+    <div class="hero-badge">⚽ FIFA World Cup 2030</div>
+    <h1>Semua Info World Cup 2030<br>Dalam Satu Tempat</h1>
+    <p>Wallchart interaktif, hitung mundur kick-off, FIFA Ranking, dan jawaban atas semua pertanyaanmu — lengkap dan gampang dipantau.</p>
+
+    <div class="host-strip" id="host-strip"></div>
+
+    <div class="mini-countdown" id="mini-countdown">
+      <p style="color:var(--color-text-muted);font-size:13px;">Memuat countdown…</p>
+    </div>
+
+    <div class="flex-center gap-12 mt-16" style="flex-wrap:wrap;">
+      <a href="wallchart.html" class="btn btn-primary">Buka Wallchart</a>
+      <a href="countdown.html" class="btn btn-ghost">Lihat Countdown Lengkap</a>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <div>
+        <h2>Jelajahi Fitur</h2>
+        <p>Semua yang kamu butuhkan seputar World Cup 2030</p>
+      </div>
+    </div>
+    <div class="grid grid-4" id="feature-grid"></div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <div>
+        <h2>Sekilas FIFA Ranking</h2>
+        <p>Top 5 tim dengan peringkat tertinggi saat ini</p>
+      </div>
+      <a href="ranking.html" class="btn btn-sm btn-ghost">Lihat Semua →</a>
+    </div>
+    <div class="card">
+      <div class="mini-rank-list" id="mini-rank-list">
+        <p style="color:var(--color-text-muted);font-size:13px;">Memuat ranking…</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section home-qna-preview">
+    <div class="section-head">
+      <div>
+        <h2>Pertanyaan Umum</h2>
+        <p>Beberapa hal yang paling sering ditanyakan</p>
+      </div>
+      <a href="docs.html" class="btn btn-sm btn-ghost">Semua Docs →</a>
+    </div>
+    <div id="qna-preview-list"></div>
+  </div>
+
+</div>
+
+<footer class="footer">
+  <p>World Cup Info's — proyek fan-made, tidak berafiliasi resmi dengan FIFA. Dibuat oleh <a href="https://github.com/pitchbrief" target="_blank" rel="noopener">pitchbrief</a>.</p>
+</footer>
+
+<script src="assets/flag-svg.js"></script>
+<script src="assets/other.js"></script>
+<script>
+  /* ---- Navbar & Home Logo ---- */
+  fetch('config.json').then(function (r) { return r.json(); }).then(function (cfg) {
+    document.getElementById('brand-icon-slot').innerHTML = OTHER_SVG.wc2030Logo;
+    document.getElementById('home-logo-slot').innerHTML = OTHER_SVG.wc2030Logo;
+
+    var linksWrap = document.getElementById('navbar-links');
+    var linksHtml = '';
+    cfg.nav.forEach(function (item) {
+      var isActive = item.href === 'index.html';
+      linksHtml += '<a class="navbar-link' + (isActive ? ' active' : '') + '" href="' + item.href + '">' +
+        '<span class="nav-icon">' + (OTHER_SVG[item.icon] || '') + '</span>' + item.label + '</a>';
+    });
+    linksWrap.innerHTML = linksHtml;
+
+    var featureGrid = document.getElementById('feature-grid');
+    var featureDescs = {
+      'wallchart.html': 'Isi skor tiap laga, dari fase grup sampai final — lengkap extra time & penalti.',
+      'countdown.html': 'Hitung mundur real-time menuju kick-off, dengan pilihan zona waktu.',
+      'ranking.html': 'Peringkat dunia FIFA Top 50, diperbarui berkala.',
+      'docs.html': 'Jawaban atas pertanyaan seputar World Cup Info\'s.'
+    };
+    var gridHtml = '';
+    cfg.nav.filter(function (item) { return item.href !== 'index.html'; }).forEach(function (item) {
+      gridHtml += '<div class="card feature-card">' +
+        '<span class="card-icon">' + (OTHER_SVG[item.icon] || '') + '</span>' +
+        '<h3>' + item.label + '</h3>' +
+        '<p>' + (featureDescs[item.href] || '') + '</p>' +
+        '<a href="' + item.href + '" class="card-cta">Buka ' + item.label + ' →</a>' +
+        '</div>';
+    });
+    featureGrid.innerHTML = gridHtml;
+  });
+
+  document.getElementById('navbar-toggle-btn').addEventListener('click', function () {
+    document.getElementById('navbar-links').classList.toggle('open');
+  });
+
+  /* ---- Host Strip ---- */
+  fetch('assets/wallchart.json').then(function (r) { return r.json(); }).then(function (wc) {
+    var hostWrap = document.getElementById('host-strip');
+    var hostCodeMap = { "Morocco": "MAR", "Portugal": "POR", "Spain": "ESP", "Uruguay": "URU", "Argentina": "ARG", "Paraguay": "PAR" };
+    var html = '';
+    wc.hosts.main.concat(wc.hosts.centenary).forEach(function (host) {
+      var code = hostCodeMap[host];
+      var flag = (typeof FLAGS !== 'undefined' && FLAGS[code]) ? FLAGS[code] : '';
+      html += '<div class="host-chip"><span class="flag-icon">' + flag + '</span>' + host + '</div>';
+    });
+    hostWrap.innerHTML = html;
+  });
+
+  /* ---- Mini Countdown (angka biasa, live tiap detik) ---- */
+  fetch('assets/countdown.json').then(function (r) { return r.json(); }).then(function (cd) {
+    var target = new Date(cd.target.utc);
+    var wrap = document.getElementById('mini-countdown');
+
+    function render() {
+      var diffMs = Math.max(0, target.getTime() - Date.now());
+      var totalSeconds = Math.floor(diffMs / 1000);
+      var days = Math.floor(totalSeconds / 86400);
+      var hours = Math.floor((totalSeconds % 86400) / 3600);
+      var minutes = Math.floor((totalSeconds % 3600) / 60);
+      var seconds = totalSeconds % 60;
+      wrap.innerHTML =
+        miniBox(days, 'Hari') + miniBox(hours, 'Jam') + miniBox(minutes, 'Menit') + miniBox(seconds, 'Detik');
+    }
+
+    function miniBox(val, label) {
+      var v = val < 10 ? '0' + val : val;
+      return '<div class="mini-cd-box"><div class="mini-cd-value">' + v + '</div><div class="mini-cd-label">' + label + '</div></div>';
+    }
+
+    render();
+    setInterval(render, 1000);
+  });
+
+  /* ---- Mini Ranking (Top 5) ---- */
+  fetch('assets/ranking.json').then(function (r) { return r.json(); }).then(function (data) {
+    var wrap = document.getElementById('mini-rank-list');
+    var top5 = data.rankings.slice(0, 5);
+    var html = '';
+    top5.forEach(function (r) {
+      var flag = (typeof FLAGS !== 'undefined' && FLAGS[r.code]) ? FLAGS[r.code] : '';
+      html += '<div class="mini-rank-row"><span class="mrn">#' + r.rank + '</span><span class="flag-icon">' + flag + '</span><span>' + r.team + '</span></div>';
+    });
+    wrap.innerHTML = html;
+  });
+
+  /* ---- QnA Preview (3 pertanyaan teratas) ---- */
+  var QNA_PREVIEW = [
+    { q: "Apa itu World Cup Info's?", a: "Website info seputar FIFA World Cup 2030 — Wallchart, Countdown, Ranking, dan Docs, dalam satu tempat." },
+    { q: "Apakah ini website resmi FIFA?", a: "Bukan. Ini proyek fan-made independen untuk tujuan informasi, tidak berafiliasi resmi dengan FIFA." },
+    { q: "Kenapa banyak tim masih 'TBD' di Wallchart?", a: "Karena kualifikasi WC 2030 baru dimulai sekitar 2027 — baru 6 negara tuan rumah yang otomatis lolos." }
+  ];
+  var qnaWrap = document.getElementById('qna-preview-list');
+  var qnaHtml = '';
+  QNA_PREVIEW.forEach(function (item) {
+    qnaHtml += '<div class="qna-mini"><h4>' + item.q + '</h4><p>' + item.a + '</p></div>';
+  });
+  qnaWrap.innerHTML = qnaHtml;
+</script>
+</body>
+</html>
