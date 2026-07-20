@@ -1,0 +1,37 @@
+{
+  "_readme": "Fill in each group with FIFA 3-letter codes (e.g. MAR, ESP, JPN). Use \"TBD\" for slots not yet determined. Codes must match the codes in assets/flags-data.js (FIFA_TEAMS) so the flag renders automatically and elimination tracking works. The 6 host nations are pre-filled. Edit this file directly — app.js reads it on every page load.",
+
+  "48": {
+    "A": ["MAR", "TBD", "TBD", "TBD"],
+    "B": ["POR", "TBD", "TBD", "TBD"],
+    "C": ["ESP", "TBD", "TBD", "TBD"],
+    "D": ["URU", "TBD", "TBD", "TBD"],
+    "E": ["ARG", "TBD", "TBD", "TBD"],
+    "F": ["PAR", "TBD", "TBD", "TBD"],
+    "G": ["TBD", "TBD", "TBD", "TBD"],
+    "H": ["TBD", "TBD", "TBD", "TBD"],
+    "I": ["TBD", "TBD", "TBD", "TBD"],
+    "J": ["TBD", "TBD", "TBD", "TBD"],
+    "K": ["TBD", "TBD", "TBD", "TBD"],
+    "L": ["TBD", "TBD", "TBD", "TBD"]
+  },
+
+  "64": {
+    "A": ["MAR", "TBD", "TBD", "TBD"],
+    "B": ["POR", "TBD", "TBD", "TBD"],
+    "C": ["ESP", "TBD", "TBD", "TBD"],
+    "D": ["URU", "TBD", "TBD", "TBD"],
+    "E": ["ARG", "TBD", "TBD", "TBD"],
+    "F": ["PAR", "TBD", "TBD", "TBD"],
+    "G": ["TBD", "TBD", "TBD", "TBD"],
+    "H": ["TBD", "TBD", "TBD", "TBD"],
+    "I": ["TBD", "TBD", "TBD", "TBD"],
+    "J": ["TBD", "TBD", "TBD", "TBD"],
+    "K": ["TBD", "TBD", "TBD", "TBD"],
+    "L": ["TBD", "TBD", "TBD", "TBD"],
+    "M": ["TBD", "TBD", "TBD", "TBD"],
+    "N": ["TBD", "TBD", "TBD", "TBD"],
+    "O": ["TBD", "TBD", "TBD", "TBD"],
+    "P": ["TBD", "TBD", "TBD", "TBD"]
+  }
+}
