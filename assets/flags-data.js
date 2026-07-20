@@ -1,16 +1,16 @@
-/* flags-data.js — Database bendera negara (200+ tim nasional) untuk World Cup Info's.
-   Semua digambar ulang secara geometris sederhana (BUKAN aset/foto resmi).
-   Dipakai untuk autocomplete: ketik kode 3-huruf FIFA (misal "MEX") -> flag muncul.
+/* flags-data.js — Country flag database (200+ national teams) for World Cup Info's.
+   All redrawn as simple geometric shapes (NOT official assets/photos).
+   Used for autocomplete: type a 3-letter FIFA code (e.g. "MEX") -> flag shows up.
 
-   Struktur akhir:
-   - var FLAGS        = { CODE: "<svg>...</svg>", ... }   (dipakai di semua halaman, kompatibel dgn nama lama)
-   - var FIFA_TEAMS    = [ { code, name }, ... ]           (dipakai untuk autocomplete/search)
+   Final structure:
+   - var FLAGS        = { CODE: "<svg>...</svg>", ... }   (used across all pages, compatible with the old name)
+   - var FIFA_TEAMS    = [ { code, name }, ... ]           (used for autocomplete/search)
    - function getFlag(code) -> svg string atau null
    - function searchTeams(query) -> array {code,name} yang cocok (buat autocomplete) */
 
 var STAR5 = "1.5,0.6 1.594,0.871 1.880,0.876 1.652,1.049 1.735,1.324 1.5,1.16 1.265,1.324 1.348,1.049 1.120,0.876 1.406,0.871";
 
-/* ===================== 50 bendera detail (dipertahankan presisi) ===================== */
+/* ===================== 50 detailed flags (kept precise) ===================== */
 var FLAGS_DETAILED = {
   FRA: { name: "France", svg: '<svg viewBox="0 0 3 2" xmlns="http://www.w3.org/2000/svg"><rect width="1" height="2" fill="#0055A4"/><rect x="1" width="1" height="2" fill="#FFFFFF"/><rect x="2" width="1" height="2" fill="#EF4135"/></svg>' },
   ARG: { name: "Argentina", svg: '<svg viewBox="0 0 3 2" xmlns="http://www.w3.org/2000/svg"><rect width="3" height="2" fill="#FFFFFF"/><rect width="3" height="0.667" fill="#74ACDF"/><rect y="1.333" width="3" height="0.667" fill="#74ACDF"/><circle cx="1.5" cy="1" r="0.22" fill="#F6B40E"/></svg>' },
@@ -64,7 +64,7 @@ var FLAGS_DETAILED = {
   PER: { name: "Peru", svg: '<svg viewBox="0 0 3 2" xmlns="http://www.w3.org/2000/svg"><rect width="1" height="2" fill="#D91023"/><rect x="1" width="1" height="2" fill="#FFFFFF"/><rect x="2" width="1" height="2" fill="#D91023"/></svg>' }
 };
 
-/* ===================== Generator untuk sisa negara (pattern sederhana) ===================== */
+/* ===================== Generator for remaining countries (simple pattern) ===================== */
 
 function buildFlag(type, colors) {
   var vb = 'xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3 2"';
@@ -144,7 +144,7 @@ var TEAM_DATA = [
   ["VIE", "Vietnam", "plain", ["#DA251D"]],
   ["SLV", "El Salvador", "h3", ["#0047AB", "#FFFFFF", "#0047AB"]],
 
-  // CONCACAF tambahan
+  // Additional CONCACAF
   ["NCA", "Nicaragua", "h3", ["#0067C6", "#FFFFFF", "#0067C6"]],
   ["DOM", "Dominican Republic", "h2", ["#002D62", "#CE1126"]],
   ["TRI", "Trinidad and Tobago", "h2", ["#DA121A", "#000000"]],
@@ -170,7 +170,7 @@ var TEAM_DATA = [
   ["TCA", "Turks and Caicos", "plain", ["#00247D"]],
   ["DMA", "Dominica", "plain", ["#007A3D"]],
 
-  // CAF tambahan
+  // Additional CAF
   ["KEN", "Kenya", "h3", ["#000000", "#BB0000", "#006600"]],
   ["ETH", "Ethiopia", "h3", ["#078930", "#FCDD09", "#DA121A"]],
   ["TAN", "Tanzania", "v2", ["#1EB53A", "#00A3DD"]],
@@ -203,7 +203,7 @@ var TEAM_DATA = [
   ["SSD", "South Sudan", "h3", ["#000000", "#DA121A", "#0F47AF"]],
   ["SEY", "Seychelles", "h3", ["#003F87", "#FCD856", "#D62828"]],
 
-  // AFC tambahan
+  // Additional AFC
   ["IND", "India", "h3", ["#FF9933", "#FFFFFF", "#138808"]],
   ["PAK", "Pakistan", "v2", ["#01411C", "#FFFFFF"]],
   ["BAN", "Bangladesh", "plainCircle", ["#006A4E", "#F42A41"]],
@@ -235,7 +235,7 @@ var TEAM_DATA = [
   ["GUM", "Guam", "plain", ["#002868"]],
   ["PRK", "Korea DPR", "h3", ["#024FA2", "#ED1C27", "#024FA2"]],
 
-  // OFC tambahan
+  // Additional OFC
   ["FIJ", "Fiji", "plain", ["#68BFE5"]],
   ["PNG", "Papua New Guinea", "v2", ["#000000", "#CE1126"]],
   ["SOL", "Solomon Islands", "v2", ["#0051BA", "#215B33"]],
@@ -247,7 +247,7 @@ var TEAM_DATA = [
   ["NCL", "New Caledonia", "h3", ["#002395", "#ED2939", "#00843D"]],
   ["TAH", "Tahiti", "h3", ["#CE1126", "#FFFFFF", "#CE1126"]],
 
-  // UEFA tambahan
+  // Additional UEFA
   ["EST", "Estonia", "h3", ["#0072CE", "#000000", "#FFFFFF"]],
   ["LAT", "Latvia", "h3", ["#9E3039", "#FFFFFF", "#9E3039"]],
   ["LTU", "Lithuania", "h3", ["#FDB913", "#006A44", "#C1272D"]],
