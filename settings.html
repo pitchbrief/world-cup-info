@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Settings — World Cup Info's</title>
 <script>
-  // Anti-flash: terapkan tema sebelum CSS/DOM lain dirender
+  // Anti-flash: apply theme before the rest of the CSS/DOM renders
   (function () {
     try {
       var raw = localStorage.getItem("wcinfo30_settings_v1");
@@ -72,26 +72,26 @@
 
   <div class="hero" style="padding:36px 0 24px;">
     <div class="hero-badge">⚙️ Settings</div>
-    <h1 style="font-size:32px;">Pengaturan</h1>
-    <p>Sesuaikan tampilan dan preferensi default World Cup Info's.</p>
+    <h1 style="font-size:32px;">Settings</h1>
+    <p>Customize the look and default preferences of World Cup Info's.</p>
   </div>
 
   <div class="settings-wrap">
 
     <div class="settings-section">
-      <h3>Tampilan</h3>
-      <p class="settings-desc">Pilih mode tampilan yang nyaman buat kamu.</p>
+      <h3>Appearance</h3>
+      <p class="settings-desc">Choose the display mode that's comfortable for you.</p>
       <div class="settings-row">
         <div>
-          <div class="settings-row-label">Tema</div>
-          <div class="settings-row-sub">Terang, gelap, atau ikuti sistem perangkat.</div>
+          <div class="settings-row-label">Theme</div>
+          <div class="settings-row-sub">Light, dark, or follow your device's system setting.</div>
         </div>
         <div class="segmented" id="theme-segmented"></div>
       </div>
       <div class="settings-row">
         <div>
-          <div class="settings-row-label">Kurangi Animasi</div>
-          <div class="settings-row-sub">Matikan animasi odometer countdown & efek hover kartu.</div>
+          <div class="settings-row-label">Reduce Motion</div>
+          <div class="settings-row-sub">Turn off the countdown odometer animation & card hover effects.</div>
         </div>
         <span class="toggle" id="reduce-motion-toggle"><span class="toggle-knob"></span></span>
       </div>
@@ -99,53 +99,53 @@
 
     <div class="settings-section">
       <h3>Wallchart</h3>
-      <p class="settings-desc">Format default yang dimuat saat membuka halaman Wallchart.</p>
+      <p class="settings-desc">The default format loaded when you open the Wallchart page.</p>
       <div class="settings-row">
-        <div class="settings-row-label">Format Default</div>
+        <div class="settings-row-label">Default Format</div>
         <div class="segmented" id="format-segmented">
-          <button data-value="48">48 Tim</button>
-          <button data-value="64">64 Tim</button>
+          <button data-value="48">48 Teams</button>
+          <button data-value="64">64 Teams</button>
         </div>
       </div>
       <div class="settings-row">
         <div>
-          <div class="settings-row-label">Reset Data Wallchart</div>
-          <div class="settings-row-sub">Hapus semua skor, kartu, dan penalti yang sudah kamu isi.</div>
+          <div class="settings-row-label">Reset Wallchart Data</div>
+          <div class="settings-row-sub">Delete all scores, cards, and penalties you've entered.</div>
         </div>
-        <button class="settings-danger-btn" id="reset-wallchart-btn">Reset Sekarang</button>
+        <button class="settings-danger-btn" id="reset-wallchart-btn">Reset Now</button>
       </div>
     </div>
 
     <div class="settings-section">
       <h3>Countdown</h3>
-      <p class="settings-desc">Zona waktu default yang ditampilkan di halaman Countdown.</p>
+      <p class="settings-desc">The default timezone shown on the Countdown page.</p>
       <div class="settings-row">
-        <div class="settings-row-label">Zona Waktu Default</div>
+        <div class="settings-row-label">Default Timezone</div>
         <select class="settings-select" id="timezone-select"></select>
       </div>
     </div>
 
     <div class="settings-section">
-      <h3>Cari Bendera</h3>
-      <p class="settings-desc">Ketik nama negara atau kode FIFA 3-huruf (contoh: "MEX", "JPN", "BRA").</p>
-      <input type="text" class="flag-lookup-input" id="flag-lookup-input" placeholder="Ketik kode atau nama negara...">
+      <h3>Flag Lookup</h3>
+      <p class="settings-desc">Type a country name or 3-letter FIFA code (e.g. "MEX", "JPN", "BRA").</p>
+      <input type="text" class="flag-lookup-input" id="flag-lookup-input" placeholder="Type a code or country name...">
       <div id="flag-lookup-result"></div>
     </div>
 
     <div class="settings-section">
-      <h3>Reset Semua Data</h3>
-      <p class="settings-desc">Menghapus seluruh preferensi Settings dan data Wallchart sekaligus.</p>
-      <button class="settings-danger-btn" id="reset-all-btn">Reset Semua</button>
+      <h3>Reset All Data</h3>
+      <p class="settings-desc">Deletes all Settings preferences and Wallchart data at once.</p>
+      <button class="settings-danger-btn" id="reset-all-btn">Reset Everything</button>
     </div>
 
-    <p class="settings-version">World Cup Info's · dikelola oleh pitchbrief</p>
+    <p class="settings-version">World Cup Info's · maintained by pitchbrief</p>
 
   </div>
 
 </div>
 
 <footer class="footer">
-  <p>World Cup Info's — proyek fan-made, tidak berafiliasi resmi dengan FIFA. Dibuat oleh <a href="https://github.com/pitchbrief" target="_blank" rel="noopener">pitchbrief</a>.</p>
+  <p>World Cup Info's — a fan-made project, not officially affiliated with FIFA. Built by <a href="https://github.com/pitchbrief" target="_blank" rel="noopener">pitchbrief</a>.</p>
 </footer>
 
 <script src="assets/flags-data.js"></script>
@@ -172,9 +172,9 @@
 
   /* ---- Theme Segmented Control ---- */
   var THEME_OPTIONS = [
-    { value: "light", label: "Terang", icon: "sun" },
-    { value: "dark", label: "Gelap", icon: "moon" },
-    { value: "system", label: "Sistem", icon: "system" }
+    { value: "light", label: "Light", icon: "sun" },
+    { value: "dark", label: "Dark", icon: "moon" },
+    { value: "system", label: "System", icon: "system" }
   ];
 
   function renderThemeSegmented() {
@@ -224,17 +224,17 @@
   renderFormatSegmented();
 
   document.getElementById('reset-wallchart-btn').addEventListener('click', function () {
-    if (confirm('Yakin mau reset semua skor & data Wallchart? Tindakan ini tidak bisa dibatalkan.')) {
+    if (confirm('Reset all Wallchart scores & data? This action cannot be undone.')) {
       localStorage.removeItem('wcinfo30_wallchart_state_v1');
-      alert('Data Wallchart berhasil direset.');
+      alert('Wallchart data has been reset.');
     }
   });
 
   document.getElementById('reset-all-btn').addEventListener('click', function () {
-    if (confirm('Yakin mau reset SEMUA data (Settings + Wallchart)? Tindakan ini tidak bisa dibatalkan.')) {
+    if (confirm('Reset ALL data (Settings + Wallchart)? This action cannot be undone.')) {
       localStorage.removeItem('wcinfo30_wallchart_state_v1');
       localStorage.removeItem('wcinfo30_settings_v1');
-      alert('Semua data berhasil direset. Halaman akan dimuat ulang.');
+      alert('All data has been reset. The page will reload.');
       window.location.reload();
     }
   });
@@ -263,7 +263,7 @@
     if (!q) { resultWrap.innerHTML = ''; return; }
     var matches = searchTeams(q);
     if (matches.length === 0) {
-      resultWrap.innerHTML = '<p style="color:var(--color-text-muted);font-size:13px;margin-top:10px;">Negara tidak ditemukan.</p>';
+      resultWrap.innerHTML = '<p style="color:var(--color-text-muted);font-size:13px;margin-top:10px;">No country found.</p>';
       return;
     }
     var html = '';
