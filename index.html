@@ -1,9 +1,22 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>World Cup Info's — Info Lengkap FIFA World Cup 2030</title>
+<title>World Cup Info's — Complete FIFA World Cup 2030 Info</title>
+<script>
+  (function () {
+    try {
+      var raw = localStorage.getItem("wcinfo30_settings_v1");
+      var s = raw ? JSON.parse(raw) : {};
+      var theme = s.theme || "system";
+      var resolved = theme === "system"
+        ? (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
+        : theme;
+      document.documentElement.setAttribute("data-theme", resolved);
+    } catch (e) {}
+  })();
+</script>
 <link rel="stylesheet" href="style.css">
 <style>
   .home-hero {
@@ -175,26 +188,26 @@
   <div class="home-hero">
     <div class="logo-slot" id="home-logo-slot"></div>
     <div class="hero-badge">⚽ FIFA World Cup 2030</div>
-    <h1>Semua Info World Cup 2030<br>Dalam Satu Tempat</h1>
-    <p>Wallchart interaktif, hitung mundur kick-off, FIFA Ranking, dan jawaban atas semua pertanyaanmu — lengkap dan gampang dipantau.</p>
+    <h1>All World Cup 2030 Info<br>In One Place</h1>
+    <p>Interactive Wallchart, kick-off countdown, FIFA Ranking, and answers to all your questions — complete and easy to follow.</p>
 
     <div class="host-strip" id="host-strip"></div>
 
     <div class="mini-countdown" id="mini-countdown">
-      <p style="color:var(--color-text-muted);font-size:13px;">Memuat countdown…</p>
+      <p style="color:var(--color-text-muted);font-size:13px;">Loading countdown…</p>
     </div>
 
     <div class="flex-center gap-12 mt-16" style="flex-wrap:wrap;">
-      <a href="wallchart.html" class="btn btn-primary">Buka Wallchart</a>
-      <a href="countdown.html" class="btn btn-ghost">Lihat Countdown Lengkap</a>
+      <a href="wallchart.html" class="btn btn-primary">Open Wallchart</a>
+      <a href="countdown.html" class="btn btn-ghost">View Full Countdown</a>
     </div>
   </div>
 
   <div class="section">
     <div class="section-head">
       <div>
-        <h2>Jelajahi Fitur</h2>
-        <p>Semua yang kamu butuhkan seputar World Cup 2030</p>
+        <h2>Explore Features</h2>
+        <p>Everything you need about World Cup 2030</p>
       </div>
     </div>
     <div class="grid grid-4" id="feature-grid"></div>
@@ -203,14 +216,14 @@
   <div class="section">
     <div class="section-head">
       <div>
-        <h2>Sekilas FIFA Ranking</h2>
-        <p>Top 5 tim dengan peringkat tertinggi saat ini</p>
+        <h2>FIFA Ranking at a Glance</h2>
+        <p>Top 5 highest-ranked teams right now</p>
       </div>
-      <a href="ranking.html" class="btn btn-sm btn-ghost">Lihat Semua →</a>
+      <a href="ranking.html" class="btn btn-sm btn-ghost">View All →</a>
     </div>
     <div class="card">
       <div class="mini-rank-list" id="mini-rank-list">
-        <p style="color:var(--color-text-muted);font-size:13px;">Memuat ranking…</p>
+        <p style="color:var(--color-text-muted);font-size:13px;">Loading ranking…</p>
       </div>
     </div>
   </div>
@@ -218,10 +231,10 @@
   <div class="section home-qna-preview">
     <div class="section-head">
       <div>
-        <h2>Pertanyaan Umum</h2>
-        <p>Beberapa hal yang paling sering ditanyakan</p>
+        <h2>Common Questions</h2>
+        <p>A few things people ask most often</p>
       </div>
-      <a href="docs.html" class="btn btn-sm btn-ghost">Semua Docs →</a>
+      <a href="docs.html" class="btn btn-sm btn-ghost">All Docs →</a>
     </div>
     <div id="qna-preview-list"></div>
   </div>
@@ -229,11 +242,12 @@
 </div>
 
 <footer class="footer">
-  <p>World Cup Info's — proyek fan-made, tidak berafiliasi resmi dengan FIFA. Dibuat oleh <a href="https://github.com/pitchbrief" target="_blank" rel="noopener">pitchbrief</a>.</p>
+  <p>World Cup Info's — a fan-made project, not officially affiliated with FIFA. Built by <a href="https://github.com/pitchbrief" target="_blank" rel="noopener">pitchbrief</a>.</p>
 </footer>
 
 <script src="assets/flags-data.js"></script>
 <script src="assets/other.js"></script>
+<script src="assets/theme.js"></script>
 <script>
   /* ---- Navbar & Home Logo ---- */
   fetch('config.json').then(function (r) { return r.json(); }).then(function (cfg) {
@@ -251,10 +265,11 @@
 
     var featureGrid = document.getElementById('feature-grid');
     var featureDescs = {
-      'wallchart.html': 'Isi skor tiap laga, dari fase grup sampai final — lengkap extra time & penalti.',
-      'countdown.html': 'Hitung mundur real-time menuju kick-off, dengan pilihan zona waktu.',
-      'ranking.html': 'Peringkat dunia FIFA Top 50, diperbarui berkala.',
-      'docs.html': 'Jawaban atas pertanyaan seputar World Cup Info\'s.'
+      'wallchart.html': 'Fill in scores for every match, from the group stage to the final — with extra time & penalties.',
+      'countdown.html': 'Real-time countdown to kick-off, with a choice of timezone.',
+      'ranking.html': 'FIFA World Ranking Top 100, updated periodically.',
+      'docs.html': 'Answers to questions about World Cup Info\'s.',
+      'settings.html': 'Theme, default wallchart format, and default timezone.'
     };
     var gridHtml = '';
     cfg.nav.filter(function (item) { return item.href !== 'index.html'; }).forEach(function (item) {
@@ -262,7 +277,7 @@
         '<span class="card-icon">' + (OTHER_SVG[item.icon] || '') + '</span>' +
         '<h3>' + item.label + '</h3>' +
         '<p>' + (featureDescs[item.href] || '') + '</p>' +
-        '<a href="' + item.href + '" class="card-cta">Buka ' + item.label + ' →</a>' +
+        '<a href="' + item.href + '" class="card-cta">Open ' + item.label + ' →</a>' +
         '</div>';
     });
     featureGrid.innerHTML = gridHtml;
@@ -285,7 +300,7 @@
     hostWrap.innerHTML = html;
   });
 
-  /* ---- Mini Countdown (angka biasa, live tiap detik) ---- */
+  /* ---- Mini Countdown (plain digits, ticks live every second) ---- */
   fetch('assets/countdown.json').then(function (r) { return r.json(); }).then(function (cd) {
     var target = new Date(cd.target.utc);
     var wrap = document.getElementById('mini-countdown');
@@ -298,7 +313,7 @@
       var minutes = Math.floor((totalSeconds % 3600) / 60);
       var seconds = totalSeconds % 60;
       wrap.innerHTML =
-        miniBox(days, 'Hari') + miniBox(hours, 'Jam') + miniBox(minutes, 'Menit') + miniBox(seconds, 'Detik');
+        miniBox(days, 'Days') + miniBox(hours, 'Hours') + miniBox(minutes, 'Minutes') + miniBox(seconds, 'Seconds');
     }
 
     function miniBox(val, label) {
@@ -322,11 +337,11 @@
     wrap.innerHTML = html;
   });
 
-  /* ---- QnA Preview (3 pertanyaan teratas) ---- */
+  /* ---- QnA Preview (top 3 questions) ---- */
   var QNA_PREVIEW = [
-    { q: "Apa itu World Cup Info's?", a: "Website info seputar FIFA World Cup 2030 — Wallchart, Countdown, Ranking, dan Docs, dalam satu tempat." },
-    { q: "Apakah ini website resmi FIFA?", a: "Bukan. Ini proyek fan-made independen untuk tujuan informasi, tidak berafiliasi resmi dengan FIFA." },
-    { q: "Kenapa banyak tim masih 'TBD' di Wallchart?", a: "Karena kualifikasi WC 2030 baru dimulai sekitar 2027 — baru 6 negara tuan rumah yang otomatis lolos." }
+    { q: "What is World Cup Info's?", a: "A website with information about FIFA World Cup 2030 — Wallchart, Countdown, Ranking, and Docs, all in one place." },
+    { q: "Is this an official FIFA website?", a: "No. This is an independent fan-made project for informational purposes, not officially affiliated with FIFA." },
+    { q: "Why are so many teams still 'TBD' in the Wallchart?", a: "Because WC 2030 qualifying only starts around 2027 — only the 6 host nations have automatically qualified so far." }
   ];
   var qnaWrap = document.getElementById('qna-preview-list');
   var qnaHtml = '';
