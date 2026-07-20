@@ -1,12 +1,25 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FIFA Ranking — World Cup Info's</title>
+<script>
+  (function () {
+    try {
+      var raw = localStorage.getItem("wcinfo30_settings_v1");
+      var s = raw ? JSON.parse(raw) : {};
+      var theme = s.theme || "system";
+      var resolved = theme === "system"
+        ? (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
+        : theme;
+      document.documentElement.setAttribute("data-theme", resolved);
+    } catch (e) {}
+  })();
+</script>
 <link rel="stylesheet" href="style.css">
 <style>
-  /* CSS + JS khusus halaman ranking.html — self-contained */
+  /* CSS + JS specific to ranking.html — self-contained */
 
   .ranking-wrap {
     max-width: 720px;
@@ -107,14 +120,14 @@
 
   <div class="hero" style="padding:36px 0 24px;">
     <div class="hero-badge">📊 FIFA Ranking</div>
-    <h1 style="font-size:32px;">Peringkat Dunia FIFA</h1>
-    <p>Menampilkan Top 50 tim nasional dengan poin ranking tertinggi.</p>
+    <h1 style="font-size:32px;">FIFA World Ranking</h1>
+    <p>Showing the Top 100 national teams by ranking points.</p>
   </div>
 
   <div class="ranking-wrap">
-    <input type="text" class="ranking-search" id="ranking-search" placeholder="Cari negara...">
+    <input type="text" class="ranking-search" id="ranking-search" placeholder="Search for a country...">
     <div class="rank-list" id="rank-list">
-      <p style="text-align:center;color:var(--color-text-muted);">Memuat data ranking…</p>
+      <p style="text-align:center;color:var(--color-text-muted);">Loading ranking data…</p>
     </div>
     <p class="ranking-updated" id="ranking-updated"></p>
     <p class="ranking-source-note" id="ranking-source"></p>
@@ -123,11 +136,12 @@
 </div>
 
 <footer class="footer">
-  <p>World Cup Info's — proyek fan-made, tidak berafiliasi resmi dengan FIFA. Dibuat oleh <a href="https://github.com/pitchbrief" target="_blank" rel="noopener">pitchbrief</a>.</p>
+  <p>World Cup Info's — a fan-made project, not officially affiliated with FIFA. Built by <a href="https://github.com/pitchbrief" target="_blank" rel="noopener">pitchbrief</a>.</p>
 </footer>
 
 <script src="assets/flags-data.js"></script>
 <script src="assets/other.js"></script>
+<script src="assets/theme.js"></script>
 <script>
   /* ---- Navbar ---- */
   fetch('config.json').then(function (r) { return r.json(); }).then(function (cfg) {
@@ -151,7 +165,7 @@
   function renderRankings(list) {
     var wrap = document.getElementById('rank-list');
     if (list.length === 0) {
-      wrap.innerHTML = '<p style="text-align:center;color:var(--color-text-muted);">Negara tidak ditemukan.</p>';
+      wrap.innerHTML = '<p style="text-align:center;color:var(--color-text-muted);">No country found.</p>';
       return;
     }
     var html = '';
@@ -170,10 +184,10 @@
   fetch('assets/ranking.json').then(function (r) { return r.json(); }).then(function (data) {
     allRankings = data.rankings;
     renderRankings(allRankings);
-    document.getElementById('ranking-updated').textContent = 'Update: ' + data.periodLabel;
+    document.getElementById('ranking-updated').textContent = 'Updated: ' + data.periodLabel;
     document.getElementById('ranking-source').textContent = data.source;
   }).catch(function () {
-    document.getElementById('rank-list').innerHTML = '<p style="text-align:center;color:#E4002B;">Gagal memuat data ranking.</p>';
+    document.getElementById('rank-list').innerHTML = '<p style="text-align:center;color:#E4002B;">Failed to load ranking data.</p>';
   });
 
   document.getElementById('ranking-search').addEventListener('input', function (e) {
