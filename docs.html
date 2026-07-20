@@ -1,9 +1,22 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Docs — World Cup Info's</title>
+<script>
+  (function () {
+    try {
+      var raw = localStorage.getItem("wcinfo30_settings_v1");
+      var s = raw ? JSON.parse(raw) : {};
+      var theme = s.theme || "system";
+      var resolved = theme === "system"
+        ? (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
+        : theme;
+      document.documentElement.setAttribute("data-theme", resolved);
+    } catch (e) {}
+  })();
+</script>
 <link rel="stylesheet" href="style.css">
 <style>
   .docs-wrap {
@@ -110,8 +123,8 @@
 
   <div class="hero" style="padding:36px 0 24px;">
     <div class="hero-badge">📄 WC Info's Docs</div>
-    <h1 style="font-size:32px;">Pertanyaan yang Sering Diajukan</h1>
-    <p>Semua yang perlu kamu tahu soal World Cup Info's.</p>
+    <h1 style="font-size:32px;">Frequently Asked Questions</h1>
+    <p>Everything you need to know about World Cup Info's.</p>
   </div>
 
   <div class="docs-wrap">
@@ -120,7 +133,7 @@
       <div class="profile-avatar" id="profile-avatar-slot"></div>
       <div class="profile-info">
         <h3 id="profile-name">PitchBrief</h3>
-        <p id="profile-bio">Ringkasan & info seputar dunia sepak bola internasional.</p>
+        <p id="profile-bio">Summaries & info about the world of international football.</p>
         <a href="https://github.com/pitchbrief" target="_blank" rel="noopener" id="profile-link">github.com/pitchbrief</a>
       </div>
     </div>
@@ -132,10 +145,11 @@
 </div>
 
 <footer class="footer">
-  <p>World Cup Info's — proyek fan-made, tidak berafiliasi resmi dengan FIFA. Dibuat oleh <a href="https://github.com/pitchbrief" target="_blank" rel="noopener">pitchbrief</a>.</p>
+  <p>World Cup Info's — a fan-made project, not officially affiliated with FIFA. Built by <a href="https://github.com/pitchbrief" target="_blank" rel="noopener">pitchbrief</a>.</p>
 </footer>
 
 <script src="assets/other.js"></script>
+<script src="assets/theme.js"></script>
 <script>
   /* ---- Navbar ---- */
   fetch('config.json').then(function (r) { return r.json(); }).then(function (cfg) {
@@ -162,44 +176,44 @@
   /* ---- QnA Content ---- */
   var QNA = [
     {
-      q: "Apa itu World Cup Info's?",
-      a: "World Cup Info's adalah website informasi seputar FIFA World Cup, khususnya edisi 2030. Berisi Wallchart interaktif, Countdown, FIFA Ranking, dan halaman Docs seperti ini."
+      q: "What is World Cup Info's?",
+      a: "World Cup Info's is a website with information about the FIFA World Cup, specifically the 2030 edition. It includes an interactive Wallchart, Countdown, FIFA Ranking, and a Docs page like this one."
     },
     {
-      q: "Apakah website ini resmi dari FIFA?",
-      a: "Bukan. World Cup Info's adalah proyek independen/fan-made yang dibuat untuk tujuan informasi, dan tidak berafiliasi secara resmi dengan FIFA maupun organisasi sepak bola internasional manapun."
+      q: "Is this website official from FIFA?",
+      a: "No. World Cup Info's is an independent, fan-made project created for informational purposes, and is not officially affiliated with FIFA or any international football organization."
     },
     {
-      q: "Kenapa Wallchart formatnya bisa 48 tim atau 64 tim?",
-      a: "Format resmi FIFA World Cup 2030 saat ini masih 48 tim (sama seperti WC 2026). Namun ada wacana perluasan ke 64 tim untuk merayakan 100 tahun World Cup, yang diusulkan CONMEBOL dan sedang dipertimbangkan FIFA. Karena belum final, Wallchart di sini menyediakan kedua simulasi formatnya."
+      q: "Why does the Wallchart offer both a 48-team and 64-team format?",
+      a: "The official FIFA World Cup 2030 format is currently still 48 teams (same as WC 2026). However, there's talk of expanding to 64 teams to celebrate the World Cup's 100th anniversary, a proposal from CONMEBOL that FIFA is considering. Since nothing is final yet, the Wallchart here provides simulations of both formats."
     },
     {
-      q: "Kenapa banyak nama tim masih 'TBD'?",
-      a: "Karena proses kualifikasi FIFA World Cup 2030 baru akan dimulai sekitar tahun 2027. Saat ini baru 6 negara tuan rumah (Maroko, Portugal, Spanyol, Uruguay, Argentina, Paraguay) yang otomatis lolos tanpa kualifikasi."
+      q: "Why are so many team names still 'TBD'?",
+      a: "Because the FIFA World Cup 2030 qualifying process won't start until around 2027. Right now, only the 6 host nations (Morocco, Portugal, Spain, Uruguay, Argentina, Paraguay) have automatically qualified without going through qualifiers."
     },
     {
-      q: "Apakah skor yang saya isi di Wallchart tersimpan?",
-      a: "Ya, skor yang kamu isi disimpan otomatis di penyimpanan lokal browser kamu (localStorage), jadi tetap ada meski halaman ditutup dan dibuka lagi di perangkat yang sama."
+      q: "Is the score I enter on the Wallchart saved?",
+      a: "Yes, any score you enter is saved automatically to your browser's local storage (localStorage), so it stays there even if you close the page and reopen it on the same device."
     },
     {
-      q: "Kapan FIFA World Cup 2030 dimulai?",
-      a: "Berdasarkan estimasi jadwal turnamen, kick-off diperkirakan pada 6 Juni 2030. Kamu bisa memantau hitung mundurnya secara real-time di halaman Countdown."
+      q: "When does FIFA World Cup 2030 start?",
+      a: "Based on estimated tournament scheduling, kick-off is expected on 8 June 2030. You can track the live countdown on the Countdown page."
     },
     {
-      q: "Data FIFA Ranking di halaman ini dari mana?",
-      a: "Data ranking dikompilasi dari sumber publik (kalkulator ranking FIFA tidak resmi) untuk keperluan informasi. Angka bisa sedikit berbeda dari situs resmi FIFA."
+      q: "Where does the FIFA Ranking data on this page come from?",
+      a: "Ranking data is compiled from public sources (an unofficial FIFA ranking calculator) for informational purposes. Figures may differ slightly from FIFA's official site."
     },
     {
-      q: "Siapa yang membuat website ini?",
-      a: "World Cup Info's dikembangkan oleh akun GitHub pitchbrief sebagai proyek open-source yang di-hosting via GitHub Pages."
+      q: "Who built this website?",
+      a: "World Cup Info's was developed by the GitHub account pitchbrief as an open-source project hosted via GitHub Pages."
     },
     {
-      q: "Apakah saya bisa berkontribusi ke project ini?",
-      a: "Tidak. World Cup Info's tidak membuka kontribusi dalam bentuk apa pun — tidak ada proses apply, tidak menerima pull request, dan bukan proyek kolaboratif terbuka."
+      q: "Can I contribute to this project?",
+      a: "No. World Cup Info's does not accept contributions in any form — there's no application process, no pull requests are accepted, and it is not an open collaborative project."
     },
     {
-      q: "Kenapa bendera di ranking terlihat sederhana?",
-      a: "Bendera digambar ulang secara geometris sederhana (bukan aset/foto resmi) supaya ringan dan aman dari isu hak cipta, sambil tetap mudah dikenali warna & pola khasnya."
+      q: "Why do the flags on the Ranking page look so simple?",
+      a: "Flags are redrawn as simple geometric shapes (not official assets/photos) to keep things lightweight and avoid copyright issues, while still being easy to recognize by their characteristic colors and patterns."
     }
   ];
 
