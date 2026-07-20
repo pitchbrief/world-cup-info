@@ -1,12 +1,25 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Countdown WC 2030 — World Cup Info's</title>
+<script>
+  (function () {
+    try {
+      var raw = localStorage.getItem("wcinfo30_settings_v1");
+      var s = raw ? JSON.parse(raw) : {};
+      var theme = s.theme || "system";
+      var resolved = theme === "system"
+        ? (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
+        : theme;
+      document.documentElement.setAttribute("data-theme", resolved);
+    } catch (e) {}
+  })();
+</script>
 <link rel="stylesheet" href="style.css">
 <style>
-  /* CSS + JS khusus halaman countdown.html — self-contained */
+  /* CSS + JS specific to countdown.html — self-contained */
 
   .countdown-hero {
     text-align: center;
@@ -157,34 +170,46 @@
 
   <div class="countdown-hero">
     <div class="hero-badge">⏳ Countdown</div>
-    <h1 style="font-size:32px;color:var(--color-primary);font-weight:900;">Menuju FIFA World Cup 2030</h1>
-    <p style="color:var(--color-text-muted);margin-top:8px;">Hitung mundur ke kick-off resmi turnamen.</p>
+    <h1 style="font-size:32px;color:var(--color-primary);font-weight:900;">Counting Down to FIFA World Cup 2030</h1>
+    <p style="color:var(--color-text-muted);margin-top:8px;">Live countdown to the tournament's official kick-off.</p>
   </div>
 
   <div class="timezone-bar">
-    <label>Zona Waktu</label>
+    <label>Time Zone</label>
     <div class="timezone-row">
       <select id="tz-preset"></select>
-      <input type="text" id="tz-custom" placeholder="Atau ketik offset manual, misal GMT+3">
+      <input type="text" id="tz-custom" placeholder="Or type a manual offset, e.g. GMT+3">
+    </div>
+  </div>
+
+  <div class="flex-center gap-8 mt-16">
+    <button class="btn btn-primary relaxing-fullscreen-btn" id="relaxing-fullscreen-btn"></button>
+    <div class="settings-row" style="border:none;padding:0;gap:8px;">
+      <span class="toggle-row-label" style="font-size:13px;">AFK Mode</span>
+      <span class="toggle" id="afk-toggle"><span class="toggle-knob"></span></span>
     </div>
   </div>
 
   <div class="countdown-grid" id="countdown-grid"></div>
 
-  <p class="target-label">Target: <strong id="target-label-text">memuat…</strong></p>
+  <p class="target-label">Target: <strong id="target-label-text">loading…</strong></p>
 
   <div class="lock-status-strip">
     <span class="status-icon" id="lock-icon-strip"></span>
-    <span id="lock-text-strip">Memeriksa status Wallchart…</span>
+    <span id="lock-text-strip">Checking Wallchart status…</span>
   </div>
 
 </div>
 
+<button class="relaxing-exit-btn" id="relaxing-exit-btn">✕ Exit Relaxing Mode</button>
+<div class="afk-indicator" id="afk-indicator">AFK mode is on — just relax and watch the countdown</div>
+
 <footer class="footer">
-  <p>World Cup Info's — proyek fan-made, tidak berafiliasi resmi dengan FIFA. Dibuat oleh <a href="https://github.com/pitchbrief" target="_blank" rel="noopener">pitchbrief</a>.</p>
+  <p>World Cup Info's — a fan-made project, not officially affiliated with FIFA. Built by <a href="https://github.com/pitchbrief" target="_blank" rel="noopener">pitchbrief</a>.</p>
 </footer>
 
 <script src="assets/other.js"></script>
+<script src="assets/theme.js"></script>
 <script>
   /* ---- Navbar ---- */
   fetch('config.json').then(function (r) { return r.json(); }).then(function (cfg) {
@@ -202,13 +227,62 @@
     document.getElementById('navbar-links').classList.toggle('open');
   });
 
+  /* ---- Relaxing Fullscreen Mode + AFK toggle ---- */
+  var relaxingBtn = document.getElementById('relaxing-fullscreen-btn');
+  var relaxingExitBtn = document.getElementById('relaxing-exit-btn');
+  var afkToggle = document.getElementById('afk-toggle');
+
+  function renderRelaxingBtn() {
+    var icon = (typeof OTHER_SVG !== 'undefined') ? OTHER_SVG.clock : '';
+    relaxingBtn.innerHTML = icon + ' Relaxing Fullscreen Mode';
+  }
+  renderRelaxingBtn();
+
+  function enterRelaxingMode() {
+    document.body.classList.add('relaxing-mode');
+    var el = document.documentElement;
+    var req = el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen;
+    if (req) {
+      try { req.call(el); } catch (e) { /* fullscreen may be blocked by browser policy, relaxing visual mode still applies */ }
+    }
+  }
+
+  function exitRelaxingMode() {
+    document.body.classList.remove('relaxing-mode');
+    document.body.classList.remove('afk-on');
+    afkToggle.classList.remove('active');
+    var exitFs = document.exitFullscreen || document.webkitExitFullscreen || document.msExitFullscreen;
+    if (document.fullscreenElement && exitFs) {
+      try { exitFs.call(document); } catch (e) {}
+    }
+  }
+
+  relaxingBtn.addEventListener('click', enterRelaxingMode);
+  relaxingExitBtn.addEventListener('click', exitRelaxingMode);
+
+  document.addEventListener('fullscreenchange', function () {
+    if (!document.fullscreenElement) {
+      document.body.classList.remove('relaxing-mode');
+      document.body.classList.remove('afk-on');
+      afkToggle.classList.remove('active');
+    }
+  });
+
+  afkToggle.addEventListener('click', function () {
+    if (!document.body.classList.contains('relaxing-mode')) {
+      enterRelaxingMode();
+    }
+    document.body.classList.toggle('afk-on');
+    afkToggle.classList.toggle('active');
+  });
+
   /* ---- Countdown Logic (odometer style) ---- */
   var UNIT_ORDER = ["years", "months", "days", "hours", "minutes", "seconds"];
-  var UNIT_LABEL = { years: "Tahun", months: "Bulan", days: "Hari", hours: "Jam", minutes: "Menit", seconds: "Detik" };
+  var UNIT_LABEL = { years: "Years", months: "Months", days: "Days", hours: "Hours", minutes: "Minutes", seconds: "Seconds" };
   var UNIT_DIGITS = { years: 2, months: 2, days: 3, hours: 2, minutes: 2, seconds: 2 };
 
   var targetUtcDate = null;
-  var currentOffsetMinutes = 7 * 60; // default GMT+7
+  var currentOffsetMinutes = (typeof WCSettings !== 'undefined') ? WCSettings.get('timezoneOffsetMinutes') : 7 * 60;
   var prevValues = {};
 
   var TZ_PRESETS = [
@@ -244,7 +318,7 @@
   }
 
   function buildStrip(startDigit) {
-    // strip berisi angka startDigit di posisi teratas (yang terlihat)
+    // strip holds startDigit at the top (visible) position
     var html = '';
     for (var n = 0; n < 10; n++) {
       html += '<span>' + ((startDigit + n) % 10) + '</span>';
@@ -284,7 +358,7 @@
     var hours = totalHours % 24;
     var totalDaysRaw = Math.floor(totalHours / 24);
 
-    // Perkiraan pemisahan tahun/bulan/hari secara kalender (bukan cuma pembagian tetap)
+    // Calendar-aware year/month/day breakdown (not just fixed division)
     var now = new Date();
     var years = targetDate.getUTCFullYear() - now.getUTCFullYear();
     var months = targetDate.getUTCMonth() - now.getUTCMonth();
@@ -370,17 +444,18 @@
     tick();
     setInterval(tick, 1000);
 
+    var wallchartUnlockDate = new Date(cd.wallchartUnlock.utc);
     var now = new Date();
-    var locked = now < targetUtcDate;
+    var locked = now < wallchartUnlockDate;
     var iconEl = document.getElementById('lock-icon-strip');
     var textEl = document.getElementById('lock-text-strip');
     if (locked) {
       iconEl.innerHTML = OTHER_SVG.lockClosed;
-      textEl.textContent = 'Wallchart WC 2030 masih terkunci sampai countdown ini berakhir.';
+      textEl.textContent = 'The WC 2030 Wallchart stays locked until ' + cd.wallchartUnlock.label + '.';
       textEl.style.color = '#374151';
     } else {
       iconEl.innerHTML = OTHER_SVG.lockOpen;
-      textEl.textContent = 'Wallchart WC 2030 sudah terbuka!';
+      textEl.textContent = 'The WC 2030 Wallchart is now open!';
       textEl.style.color = '#0D8F63';
     }
   });
