@@ -5,7 +5,7 @@
     "main": ["Morocco", "Portugal", "Spain"],
     "centenary": ["Uruguay", "Argentina", "Paraguay"]
   },
-  "note": "Format 64 tim MASIH WACANA per Juli 2026 (diusulkan CONMEBOL, belum disetujui FIFA Council). Format resmi yang berlaku saat ini tetap 48 tim (sama seperti WC 2026, 104 laga). Estimasi laga untuk skema 64 tim ~128 laga (16 grup x 6 laga + 32 laga fase gugur), berdasarkan estimasi media (bukan 148). activeFormat bisa di-toggle di app.js antara '64' dan '48'.",
+  "note": "The 64-team format is STILL A PROPOSAL as of July 2026 (put forward by CONMEBOL, not yet approved by the FIFA Council). The official format currently in effect remains 48 teams (same as WC 2026, 104 matches). Estimated match count for the 64-team scheme is ~128 matches (16 groups x 6 matches + 32 knockout matches), based on media estimates (not 148). activeFormat can be toggled in app.js between '64' and '48'.",
   "activeFormat": "64",
   "groupFixtureTemplate": ["1v2", "1v3", "1v4", "2v3", "2v4", "3v4"],
   "formats": {
@@ -39,7 +39,7 @@
       "knockout": {
         "roundOf32": {
           "matchCount": 16,
-          "seedingNote": "16 juara grup vs 16 runner-up grup. Pairing pasti baru bisa ditentukan setelah drawing resmi FIFA dilakukan.",
+          "seedingNote": "16 group winners vs 16 group runners-up. Exact pairings can only be determined once the official FIFA draw takes place.",
           "matches": [
             { "id": "R32-1", "home": "Winner A", "away": "Runner-up B" },
             { "id": "R32-2", "home": "Winner B", "away": "Runner-up A" },
@@ -113,7 +113,7 @@
       "knockout": {
         "roundOf32": {
           "matchCount": 16,
-          "seedingNote": "12 juara grup + 12 runner-up grup + 8 tim peringkat ke-3 terbaik = 32 tim. Pairing pasti ditentukan setelah drawing resmi FIFA.",
+          "seedingNote": "12 group winners + 12 group runners-up + 8 best third-placed teams = 32 teams. Exact pairings are determined after the official FIFA draw.",
           "matches": [
             { "id": "R32-1", "home": "Winner A", "away": "3rd Place #1" },
             { "id": "R32-2", "home": "Winner B", "away": "Runner-up F" },
@@ -168,7 +168,7 @@
     "fullTime": { "home": 0, "away": 0 },
     "extraTime": {
       "enabled": false,
-      "note": "Array periode extra time, bisa lebih dari 2 periode (misal replay/periode tambahan khusus).",
+      "note": "Array of extra time periods, can be more than 2 periods (e.g. replay/special additional periods).",
       "periods": [
         { "period": 1, "home": 0, "away": 0 },
         { "period": 2, "home": 0, "away": 0 }
@@ -176,7 +176,7 @@
     },
     "penalties": {
       "enabled": false,
-      "note": "10 klik total (5 lawan 5). Tiap klik siklus 3 status: goal -> miss -> neutral. Skor final ditampilkan format '0 (2) : (3) 0'.",
+      "note": "10 clicks total (5 vs 5). Each click cycles through 3 states: goal -> miss -> neutral. Final score is shown in the format '0 (2) : (3) 0'.",
       "sequenceLength": 10,
       "perSide": 5,
       "clickStates": ["goal", "miss", "neutral"],
@@ -184,11 +184,11 @@
       "away": { "score": 0, "sequence": ["neutral", "neutral", "neutral", "neutral", "neutral"] }
     },
     "cards": {
-      "note": "Input jumlah kartu per tim, tidak spesifik ke pemain/negara tertentu.",
+      "note": "Card count input per team, not specific to any individual player/nation.",
       "home": { "yellow": 0, "red": 0 },
       "away": { "yellow": 0, "red": 0 }
     },
     "scoreDisplayFormatExample": "0 (2) : (3) 0"
   },
-  "disclaimer": "Data tim kualifikasi masih placeholder (TBD) karena kualifikasi WC 2030 baru dimulai 2027 dan belum ada tim yang lolos selain 6 negara tuan rumah otomatis. Struktur ini akan diperbarui seiring proses kualifikasi berjalan."
+  "disclaimer": "Qualifying team data is still placeholder (TBD) because WC 2030 qualifying doesn't start until 2027, and no teams have qualified yet besides the 6 automatic host nations. This structure will be updated as the qualifying process progresses."
 }
