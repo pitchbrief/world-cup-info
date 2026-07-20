@@ -1,6 +1,6 @@
-/* theme.js — Engine Settings global untuk World Cup Info's
-   Menangani: dark/light/system mode, default format wallchart,
-   default timezone countdown. Dipakai di semua halaman lewat
+/* theme.js — Global Settings engine for World Cup Info's
+   Handles: dark/light/system mode, default wallchart format,
+   default countdown timezone. Used on every page via
    <script src="assets/theme.js"></script> + snippet anti-flash di <head>. */
 
 var WC_SETTINGS_KEY = "wcinfo30_settings_v1";
@@ -65,7 +65,7 @@ var WCSettings = (function () {
     btn.innerHTML = resolved === "dark" ? OTHER_SVG.sun : OTHER_SVG.moon;
   }
 
-  // Toggle cepat: cuma gonta-ganti light <-> dark (tidak menyentuh opsi "system")
+  // Quick toggle: just flips light <-> dark (does not touch the "system" option)
   function quickToggle() {
     var current = resolvedTheme(get("theme"));
     var next = current === "dark" ? "light" : "dark";
@@ -89,10 +89,10 @@ var WCSettings = (function () {
     updateToggleIcon(resolvedTheme(get("theme")));
   }
 
-  // Terapkan tema sesegera mungkin (sebelum DOM lain dirender) untuk cegah flash
+  // Apply the theme as early as possible (before other DOM renders) to prevent flashing
   applyTheme(get("theme"));
 
-  // Kalau mode "system" dan OS ganti tema saat halaman terbuka, ikut berubah live
+  // If mode is "system" and the OS theme changes while the page is open, follow it live
   if (window.matchMedia) {
     window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function () {
       if (get("theme") === "system") { applyTheme("system"); }
