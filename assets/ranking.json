@@ -1,11 +1,11 @@
 {
   "title": "FIFA Men's World Ranking",
   "scope": "Top 100",
-  "periodLabel": "20 Juli 2026",
-  "source": "Dikompilasi dari data publik ranking FIFA (unofficial live calculator), untuk keperluan informasi. Angka final dapat berbeda dari situs resmi FIFA.",
+  "periodLabel": "20 July 2026",
+  "source": "Compiled from publicly available FIFA ranking data (unofficial live calculator), for informational purposes. Final figures may differ from FIFA's official site.",
   "lastUpdated": "2026-07-17",
   "displayFields": ["rank", "team", "code", "points"],
-  "note": "Halaman FIFA Ranking hanya menampilkan RANK (posisi + poin), tidak menampilkan riwayat pertandingan.",
+  "note": "The FIFA Ranking page only shows RANK (position + points), not match history.",
   "rankings": [
     { "rank": 1, "team": "France", "code": "FRA", "points": 1948.97 },
     { "rank": 2, "team": "Argentina", "code": "ARG", "points": 1943.47 },
