@@ -1,9 +1,22 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>WC 2030 Wallchart — World Cup Info's</title>
+<script>
+  (function () {
+    try {
+      var raw = localStorage.getItem("wcinfo30_settings_v1");
+      var s = raw ? JSON.parse(raw) : {};
+      var theme = s.theme || "system";
+      var resolved = theme === "system"
+        ? (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
+        : theme;
+      document.documentElement.setAttribute("data-theme", resolved);
+    } catch (e) {}
+  })();
+</script>
 <link rel="stylesheet" href="style.css">
 <style>
   /* CSS khusus halaman wallchart.html (JS logic ada di app.js) */
@@ -215,16 +228,16 @@
 <div class="page-shell">
 
   <div class="hero" style="padding:36px 0 20px;">
-    <div class="hero-badge">🏆 WC 2030 Wallchart</div>
-    <h1 style="font-size:32px;">Wallchart FIFA World Cup 2030</h1>
-    <p>Isi skor tiap pertandingan, mulai dari fase grup sampai final — lengkap dengan extra time, adu penalti, dan kartu.</p>
+    <div class="hero-badge" id="hero-badge-text">🏆 Wallchart Sandbox</div>
+    <h1 style="font-size:32px;" id="wallchart-h1">Wallchart Sandbox</h1>
+    <p id="wallchart-subtitle">This is a simulation — the countdown to WC 2030 hasn't finished yet, so fill it in however you like. Fill in scores for every match, from the group stage all the way to the final, complete with extra time, penalty shootouts, and cards.</p>
   </div>
 
   <div class="lock-banner">
     <span class="lock-icon" id="lock-status-icon"></span>
     <div class="lock-banner-text">
-      <strong id="lock-status-title">Memeriksa status kunci wallchart…</strong>
-      <span id="lock-status-desc">Status ini mengikuti countdown WC 2030.</span>
+      <strong id="lock-status-title">Checking wallchart status…</strong>
+      <span id="lock-status-desc">This status follows the WC 2030 countdown.</span>
     </div>
   </div>
 
@@ -235,8 +248,8 @@
   </div>
 
   <div class="wallchart-tabs">
-    <div class="wallchart-tab active" data-target="view-groups">Fase Grup</div>
-    <div class="wallchart-tab" data-target="view-knockout">Fase Gugur</div>
+    <div class="wallchart-tab active" data-target="view-groups">World Cup Group</div>
+    <div class="wallchart-tab" data-target="view-knockout">Score Wallchart</div>
   </div>
 
   <div class="wallchart-view active" id="view-groups">
@@ -250,14 +263,14 @@
 </div>
 
 <footer class="footer">
-  <p>World Cup Info's — proyek fan-made, tidak berafiliasi resmi dengan FIFA. Dibuat oleh <a href="https://github.com/pitchbrief" target="_blank" rel="noopener">pitchbrief</a>.</p>
+  <p>World Cup Info's — a fan-made project, not officially affiliated with FIFA. Built by <a href="https://github.com/pitchbrief" target="_blank" rel="noopener">pitchbrief</a>.</p>
 </footer>
 
-<!-- Modal "Other" -->
+<!-- "Other" modal -->
 <div class="modal-overlay" id="match-modal">
   <div class="modal-box">
     <div class="modal-head">
-      <h3 id="modal-match-title">Detail Pertandingan</h3>
+      <h3 id="modal-match-title">Match Details</h3>
       <button class="modal-close" id="modal-close-btn">✕</button>
     </div>
     <div id="modal-body"></div>
@@ -266,8 +279,9 @@
 
 <script src="assets/flags-data.js"></script>
 <script src="assets/other.js"></script>
+<script src="assets/theme.js"></script>
 <script>
-  // Render navbar & brand icon dari config.json + other.js (ikon bracket sesuai halaman)
+  // Render navbar & brand icon from config.json + other.js
   fetch('config.json').then(function (r) { return r.json(); }).then(function (cfg) {
     document.getElementById('brand-icon-slot').innerHTML = OTHER_SVG.wc2030Logo;
     var linksWrap = document.getElementById('navbar-links');
@@ -283,26 +297,36 @@
     document.getElementById('navbar-links').classList.toggle('open');
   });
 
-  // Cek status kunci wallchart berdasarkan countdown.json
+  // Check wallchart lock status from countdown.json, and switch page naming:
+  // "Wallchart Sandbox" while still locked, "World Cup Wallchart" once unlocked.
+  // Note: the Wallchart unlocks on its own schedule (wallchartUnlock), which is
+  // earlier than the main kick-off countdown target shown on the Countdown page.
   fetch('assets/countdown.json').then(function (r) { return r.json(); }).then(function (cd) {
-    var targetUtc = new Date(cd.target.utc);
+    var unlockUtc = new Date(cd.wallchartUnlock.utc);
     var now = new Date();
-    var locked = now < targetUtc;
+    var locked = now < unlockUtc;
     var iconEl = document.getElementById('lock-status-icon');
     var titleEl = document.getElementById('lock-status-title');
     var descEl = document.getElementById('lock-status-desc');
     if (locked) {
       iconEl.innerHTML = OTHER_SVG.lockClosed;
-      titleEl.textContent = 'Wallchart masih terkunci';
-      descEl.textContent = 'Terbuka otomatis begitu countdown mencapai ' + cd.target.label + '. Kamu tetap bisa mencoba isi simulasi skor di bawah.';
+      titleEl.textContent = 'Wallchart Sandbox (simulation mode)';
+      descEl.textContent = 'Turns into the real World Cup Wallchart once it unlocks on ' + cd.wallchartUnlock.label + '. Feel free to try filling in simulated scores below in the meantime.';
+      document.getElementById('hero-badge-text').innerHTML = '🏆 Wallchart Sandbox';
+      document.getElementById('wallchart-h1').textContent = 'Wallchart Sandbox';
+      document.title = "Wallchart Sandbox — World Cup Info's";
     } else {
       iconEl.innerHTML = OTHER_SVG.lockOpen;
-      titleEl.textContent = 'Wallchart terbuka';
-      descEl.textContent = 'Turnamen sudah dimulai — silakan isi & pantau skor pertandingan.';
+      titleEl.textContent = 'World Cup Wallchart';
+      descEl.textContent = 'The tournament has started — fill in and track live match scores.';
+      document.getElementById('hero-badge-text').innerHTML = '🏆 World Cup Wallchart';
+      document.getElementById('wallchart-h1').textContent = 'World Cup Wallchart';
+      document.getElementById('wallchart-subtitle').textContent = 'Fill in scores for every match, from the group stage all the way to the final, complete with extra time, penalty shootouts, and cards.';
+      document.title = "World Cup Wallchart — World Cup Info's";
     }
   });
 
-  // Tab switcher Fase Grup / Fase Gugur
+  // Tab switcher: World Cup Group / Score Wallchart
   document.querySelectorAll('.wallchart-tab').forEach(function (tab) {
     tab.addEventListener('click', function () {
       document.querySelectorAll('.wallchart-tab').forEach(function (t) { t.classList.remove('active'); });
