@@ -1,11 +1,11 @@
 {
   "siteName": "World Cup Info's",
   "shortName": "WC Info's",
-  "tagline": "Info lengkap FIFA World Cup 2030 — wallchart, countdown, ranking, dan lainnya",
+  "tagline": "Complete FIFA World Cup 2030 info — wallchart, countdown, ranking, and more",
   "account": {
     "username": "pitchbrief",
     "displayName": "PitchBrief",
-    "bio": "Ringkasan & info seputar dunia sepak bola internasional — jadwal, ranking, dan momen turnamen dunia, disajikan simpel.",
+    "bio": "Summaries & info about the world of international football — schedules, rankings, and tournament moments, presented simply.",
     "github": "https://github.com/pitchbrief",
     "repo": "https://github.com/pitchbrief/world-cup-info"
   },
@@ -45,7 +45,7 @@
     "colorBg": "#F5F7F6",
     "colorSurface": "#FFFFFF",
     "font": "Inter",
-    "designLanguage": "iOS 26 (tanpa Liquid Glass)"
+    "designLanguage": "iOS 26 (without Liquid Glass)"
   },
   "wallchart": {
     "defaultFormat": "64",
