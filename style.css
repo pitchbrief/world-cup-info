@@ -2,7 +2,7 @@
    Design language: iOS 26 (flat, soft shadow, rounded corners) TANPA efek Liquid Glass/blur.
    Font: Inter. */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Anton&display=swap');
 
 :root {
   --color-primary: #0B3D2E;
@@ -32,6 +32,40 @@
   --shadow-lg: 0 16px 48px rgba(11, 61, 46, 0.16);
 
   --font-main: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Anton', 'Inter', sans-serif;
+}
+
+/* World Cup-style display headings (Anton) with a subtle layered 3D depth effect */
+.hero h1,
+.home-hero h1,
+.countdown-hero h1 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  text-shadow:
+    1px 1px 0 rgba(11, 61, 46, 0.15),
+    2px 2px 0 rgba(11, 61, 46, 0.12),
+    3px 3px 0 rgba(11, 61, 46, 0.09),
+    4px 4px 8px rgba(11, 61, 46, 0.18);
+}
+
+html[data-theme="dark"] .hero h1,
+html[data-theme="dark"] .home-hero h1,
+html[data-theme="dark"] .countdown-hero h1 {
+  text-shadow:
+    1px 1px 0 rgba(0, 0, 0, 0.4),
+    2px 2px 0 rgba(0, 0, 0, 0.32),
+    3px 3px 0 rgba(0, 0, 0, 0.24),
+    4px 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.navbar-brand {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  font-size: 16px !important;
 }
 
 /* ===== Dark Mode ===== */
@@ -303,12 +337,14 @@ input, select {
   padding: 24px;
   box-shadow: var(--shadow-soft);
   border: 1px solid var(--color-border);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s ease;
+  transform-style: preserve-3d;
+  perspective: 800px;
 }
 
 .card:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-med);
+  transform: translateY(-5px) rotateX(2deg) rotateY(-1.5deg);
+  box-shadow: var(--shadow-med), 0 2px 0 rgba(212, 175, 55, 0.25);
 }
 
 .card-icon {
@@ -1038,4 +1074,28 @@ body.relaxing-mode .relaxing-exit-btn {
 
 body.relaxing-mode.afk-on .afk-indicator {
   display: block;
+}
+
+/* ===== Elimination badge & match name label ===== */
+
+.eliminated-badge {
+  display: inline-block;
+  background: var(--color-danger);
+  color: #FFFFFF;
+  font-size: 9px;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: var(--radius-pill);
+  margin-left: 6px;
+  letter-spacing: 0.5px;
+  vertical-align: middle;
+}
+
+.fixture-name-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  margin-bottom: 2px;
 }
