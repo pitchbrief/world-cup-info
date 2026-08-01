@@ -78,7 +78,7 @@ var WCSettings = (function () {
     var btn = document.createElement("button");
     btn.id = "theme-quick-toggle";
     btn.className = "theme-toggle-btn";
-    btn.setAttribute("aria-label", "Ganti mode terang/gelap");
+    btn.setAttribute("aria-label", "Toggle light/dark mode");
     var toggleEl = navInner.querySelector(".navbar-toggle");
     if (toggleEl) {
       navInner.insertBefore(btn, toggleEl);
@@ -87,6 +87,31 @@ var WCSettings = (function () {
     }
     btn.addEventListener("click", quickToggle);
     updateToggleIcon(resolvedTheme(get("theme")));
+  }
+
+  // Floating Dock — persistent quick-nav (desktop only; mobile already has the
+  // navbar hamburger, so the dock would just duplicate it — see the
+  // max-width:640px rule in style.css). Adapted from the user-provided
+  // "Floating Dock" component: icon-only dock, magnify + lift on hover,
+  // active page highlighted. Reason for existing on a multi-page info site:
+  // fast page-to-page hopping without scrolling back up to the navbar.
+  function injectFloatingDock() {
+    if (document.querySelector(".floating-dock")) { return; }
+    fetch("config.json").then(function (r) { return r.json(); }).then(function (cfg) {
+      var currentPage = window.location.pathname.split("/").pop() || "index.html";
+      var dock = document.createElement("div");
+      dock.className = "floating-dock";
+      cfg.nav.forEach(function (item) {
+        var a = document.createElement("a");
+        a.href = item.href;
+        a.className = "floating-dock-item" + (item.href === currentPage ? " active" : "");
+        a.setAttribute("aria-label", item.label);
+        a.title = item.label;
+        a.innerHTML = (typeof OTHER_SVG !== "undefined" && OTHER_SVG[item.icon]) ? OTHER_SVG[item.icon] : "";
+        dock.appendChild(a);
+      });
+      document.body.appendChild(dock);
+    }).catch(function () { /* dock is a nice-to-have, fail silently */ });
   }
 
   // Apply the theme as early as possible (before other DOM renders) to prevent flashing
@@ -99,7 +124,10 @@ var WCSettings = (function () {
     });
   }
 
-  document.addEventListener("DOMContentLoaded", injectQuickToggleButton);
+  document.addEventListener("DOMContentLoaded", function () {
+    injectQuickToggleButton();
+    injectFloatingDock();
+  });
 
   return {
     get: get,
