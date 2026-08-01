@@ -17,6 +17,7 @@
     } catch (e) {}
   })();
 </script>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Ccircle cx=%2716%27 cy=%2716%27 r=%2716%27 fill=%27%230B3D2E%27/%3E%3Ccircle cx=%2716%27 cy=%2715%27 r=%279%27 fill=%27%23F4F1E8%27/%3E%3Cpolygon points=%2716,10 19,12.5 18,16 14,16 13,12.5%27 fill=%27%231A1A1A%27/%3E%3C/svg%3E">
 <link rel="stylesheet" href="style.css">
 <style>
   .home-hero {
@@ -150,6 +151,17 @@
     height: 15px;
   }
 
+  #qna-preview-list {
+    min-height: 190px;
+  }
+
+  .footer-wordmark-base,
+  .footer-wordmark-reveal {
+    font-size: 34px;
+    font-weight: 400;
+    letter-spacing: 1px;
+  }
+
   .home-qna-preview .qna-mini {
     background: var(--color-surface);
     border-radius: var(--radius-md);
@@ -188,8 +200,8 @@
   <div class="home-hero">
     <div class="logo-slot" id="home-logo-slot"></div>
     <div class="hero-badge">⚽ FIFA World Cup 2030</div>
-    <h1>All World Cup 2030 Info<br>In One Place</h1>
-    <p>Interactive Wallchart, kick-off countdown, FIFA Ranking, and answers to all your questions — complete and easy to follow.</p>
+    <h1 id="hero-h1">All World Cup 2030 Info<br>In One Place</h1>
+    <p>Interactive Wallchart, kick-off countdown, FIFA Ranking, and answers to all your questions — complete and easy to follow around <span id="hero-pointer-target">2030</span>.</p>
 
     <div class="host-strip" id="host-strip"></div>
 
@@ -242,11 +254,23 @@
 </div>
 
 <footer class="footer">
-  <p>World Cup Info's — a fan-made project, not officially affiliated with FIFA. Built by <a href="https://github.com/pitchbrief" target="_blank" rel="noopener">pitchbrief</a>.</p>
+  <svg id="footer-wordmark" class="text-hover-wordmark" viewBox="0 0 420 90" width="280" height="60" xmlns="http://www.w3.org/2000/svg" aria-label="World Cup Info's">
+    <defs>
+      <radialGradient id="footerRevealMask" gradientUnits="userSpaceOnUse" r="22%">
+        <stop offset="0%" stop-color="white"/>
+        <stop offset="100%" stop-color="black"/>
+      </radialGradient>
+      <mask id="footerTextMask"><rect x="0" y="0" width="100%" height="100%" fill="url(#footerRevealMask)"/></mask>
+    </defs>
+    <text x="50%" y="55%" text-anchor="middle" dominant-baseline="middle" class="footer-wordmark-base" fill="none" stroke="var(--color-border)" stroke-width="0.6">World Cup Info's</text>
+    <text x="50%" y="55%" text-anchor="middle" dominant-baseline="middle" class="footer-wordmark-reveal" fill="none" stroke="var(--color-accent)" stroke-width="0.6" mask="url(#footerTextMask)">World Cup Info's</text>
+  </svg>
+  <p style="margin-top:10px;">World Cup Info's — a fan-made project, not officially affiliated with FIFA. Built by <a href="https://github.com/pitchbrief" target="_blank" rel="noopener">pitchbrief</a>.</p>
 </footer>
 
 <script src="assets/flags-data.js"></script>
 <script src="assets/other.js"></script>
+<script src="assets/effects.js"></script>
 <script src="assets/theme.js"></script>
 <script>
   /* ---- Navbar & Home Logo ---- */
@@ -337,18 +361,34 @@
     wrap.innerHTML = html;
   });
 
-  /* ---- QnA Preview (top 3 questions) ---- */
+  /* ---- QnA Preview: rendered as a Card Stack (see assets/effects.js) —
+     a literal stack implies there's more underneath, nudging people to
+     open the full Docs page rather than a flat list that looks complete
+     on its own. ---- */
   var QNA_PREVIEW = [
-    { q: "What is World Cup Info's?", a: "A website with information about FIFA World Cup 2030 — Wallchart, Countdown, Ranking, and Docs, all in one place." },
-    { q: "Is this an official FIFA website?", a: "No. This is an independent fan-made project for informational purposes, not officially affiliated with FIFA." },
-    { q: "Why are so many teams still 'TBD' in the Wallchart?", a: "Because WC 2030 qualifying only starts around 2027 — only the 6 host nations have automatically qualified so far." }
+    { title: "What is World Cup Info's?", content: "A website with information about FIFA World Cup 2030 — Wallchart, Countdown, Ranking, and Docs, all in one place." },
+    { title: "Is this an official FIFA website?", content: "No. This is an independent fan-made project for informational purposes, not officially affiliated with FIFA." },
+    { title: "Why are so many teams still 'TBD' in the Wallchart?", content: "Because WC 2030 qualifying only starts around 2027 — only the 6 host nations have automatically qualified so far." }
   ];
-  var qnaWrap = document.getElementById('qna-preview-list');
-  var qnaHtml = '';
-  QNA_PREVIEW.forEach(function (item) {
-    qnaHtml += '<div class="qna-mini"><h4>' + item.q + '</h4><p>' + item.a + '</p></div>';
-  });
-  qnaWrap.innerHTML = qnaHtml;
+  cardStack(document.getElementById('qna-preview-list'), QNA_PREVIEW);
+
+  /* ---- Hero: Text Generate Effect + Pointer Highlight (see assets/effects.js) ---- */
+  textGenerateEffect(document.getElementById('hero-h1'), { duration: 600, stagger: 90 });
+  pointerHighlight(document.getElementById('hero-pointer-target'));
+
+  /* ---- Footer wordmark: Text Hover Effect (mouse-tracked gradient reveal) ---- */
+  (function () {
+    var svg = document.getElementById('footer-wordmark');
+    var gradient = document.getElementById('footerRevealMask');
+    if (!svg || !gradient) { return; }
+    svg.addEventListener('mousemove', function (e) {
+      var rect = svg.getBoundingClientRect();
+      var cx = ((e.clientX - rect.left) / rect.width) * 100;
+      var cy = ((e.clientY - rect.top) / rect.height) * 100;
+      gradient.setAttribute('cx', cx + '%');
+      gradient.setAttribute('cy', cy + '%');
+    });
+  })();
 </script>
 </body>
 </html>
