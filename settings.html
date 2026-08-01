@@ -18,6 +18,7 @@
     } catch (e) {}
   })();
 </script>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Ccircle cx=%2716%27 cy=%2716%27 r=%2716%27 fill=%27%230B3D2E%27/%3E%3Ccircle cx=%2716%27 cy=%2715%27 r=%279%27 fill=%27%23F4F1E8%27/%3E%3Cpolygon points=%2716,10 19,12.5 18,16 14,16 13,12.5%27 fill=%27%231A1A1A%27/%3E%3C/svg%3E">
 <link rel="stylesheet" href="style.css">
 <style>
   .settings-wrap {
@@ -150,6 +151,7 @@
 
 <script src="assets/flags-data.js"></script>
 <script src="assets/other.js"></script>
+<script src="assets/effects.js"></script>
 <script src="assets/theme.js"></script>
 <script>
   /* ---- Navbar ---- */
@@ -223,20 +225,19 @@
   });
   renderFormatSegmented();
 
-  document.getElementById('reset-wallchart-btn').addEventListener('click', function () {
-    if (confirm('Reset all Wallchart scores & data? This action cannot be undone.')) {
-      localStorage.removeItem('wcinfo30_wallchart_state_v1');
-      alert('Wallchart data has been reset.');
-    }
+  statefulButton(document.getElementById('reset-wallchart-btn'), function () {
+    if (!confirm('Reset all Wallchart scores & data? This action cannot be undone.')) { return false; }
+    localStorage.removeItem('wcinfo30_wallchart_state_v1');
+    return new Promise(function (resolve) { setTimeout(resolve, 400); });
   });
 
-  document.getElementById('reset-all-btn').addEventListener('click', function () {
-    if (confirm('Reset ALL data (Settings + Wallchart)? This action cannot be undone.')) {
-      localStorage.removeItem('wcinfo30_wallchart_state_v1');
-      localStorage.removeItem('wcinfo30_settings_v1');
-      alert('All data has been reset. The page will reload.');
-      window.location.reload();
-    }
+  statefulButton(document.getElementById('reset-all-btn'), function () {
+    if (!confirm('Reset ALL data (Settings + Wallchart)? This action cannot be undone.')) { return false; }
+    localStorage.removeItem('wcinfo30_wallchart_state_v1');
+    localStorage.removeItem('wcinfo30_settings_v1');
+    return new Promise(function (resolve) {
+      setTimeout(function () { window.location.reload(); resolve(); }, 900);
+    });
   });
 
   /* ---- Timezone Select ---- */
