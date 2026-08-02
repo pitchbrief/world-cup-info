@@ -1,4 +1,4 @@
-/* style.css — World Cup Info's
+/* style.css: World Cup Info's
    Design language: iOS 26 (flat, soft shadow, rounded corners) TANPA efek Liquid Glass/blur.
    Font: Inter. */
 
@@ -281,25 +281,20 @@ input, select {
   text-align: center;
 }
 
-.hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  border-radius: var(--radius-pill);
-  background: rgba(212, 175, 55, 0.14);
-  color: var(--color-accent);
-  font-weight: 700;
-  font-size: 13px;
-  margin-bottom: 20px;
-}
-
 .hero h1 {
   font-size: 44px;
   font-weight: 900;
   color: var(--color-primary);
   letter-spacing: -1px;
   margin-bottom: 14px;
+}
+
+.home-hero h1 {
+  font-size: 40px;
+  font-weight: 900;
+  margin: 0 auto 14px;
+  max-width: 680px;
+  line-height: 1.15;
 }
 
 .hero p {
@@ -311,6 +306,7 @@ input, select {
 
 @media (max-width: 640px) {
   .hero h1 { font-size: 30px; }
+  .home-hero h1 { font-size: 26px; }
 }
 
 /* ===== Cards / Grid ===== */
@@ -904,6 +900,16 @@ input, select {
   font-size: 12.5px;
 }
 
+.group-card {
+  overflow-x: auto;
+}
+
+@media (max-width: 480px) {
+  .standings-table { font-size: 11px; }
+  .standings-table th, .standings-table td { padding: 6px 3px; }
+  .standings-team-cell span { max-width: 90px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: inline-block; vertical-align: middle; }
+}
+
 .standings-table th {
   text-align: center;
   font-weight: 700;
@@ -1020,8 +1026,7 @@ body.relaxing-mode .navbar,
 body.relaxing-mode .timezone-bar,
 body.relaxing-mode .footer,
 body.relaxing-mode .target-label,
-body.relaxing-mode .countdown-hero p,
-body.relaxing-mode .hero-badge {
+body.relaxing-mode .countdown-hero p {
   display: none !important;
 }
 
@@ -1289,4 +1294,24 @@ body.relaxing-mode.afk-on .afk-indicator {
 
 .text-hover-wordmark text {
   font-family: var(--font-display);
+}
+
+.card-stack-fallback-item {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 16px 18px;
+  margin-bottom: 10px;
+}
+
+.card-stack-fallback-item strong {
+  display: block;
+  color: var(--color-primary);
+  margin-bottom: 4px;
+  font-size: 14px;
+}
+
+.card-stack-fallback-item div {
+  font-size: 13px;
+  color: var(--color-text-muted);
 }
