@@ -1,6 +1,6 @@
 # ⚽ World Cup Info's
 
-**World Cup Info's** adalah website informasi seputar **FIFA World Cup**, dibuat sebagai proyek fan-made non-komersial untuk menyajikan info turnamen dunia secara ringkas dan mudah diakses — mulai dari wallchart, countdown, hingga ranking FIFA.
+**World Cup Info's** adalah website informasi seputar **FIFA World Cup**, dibuat sebagai proyek fan-made non-komersial untuk menyajikan info turnamen dunia secara ringkas dan mudah diakses: mulai dari wallchart, countdown, hingga ranking FIFA.
 
 > ⚠️ **Disclaimer:** Website ini adalah proyek independen/fan-made dan **tidak berafiliasi secara resmi dengan FIFA** atau organisasi sepak bola internasional manapun. Seluruh data disajikan untuk tujuan informasi semata.
 
@@ -8,7 +8,7 @@
 
 ## 🌐 Live Demo
 
-Dihosting via **GitHub Pages** — bisa diakses langsung setelah repository diaktifkan di `Settings > Pages`.
+Dihosting via **GitHub Pages**, bisa diakses langsung setelah repository diaktifkan di `Settings > Pages`.
 
 ```
 https://pitchbrief.github.io/world-cup-info/
@@ -86,7 +86,7 @@ Karena seluruh halaman berbasis file statis (HTML/CSS/JS murni tanpa build tool)
 
 - HTML5, CSS3, Vanilla JavaScript (ES5-compatible)
 - SVG untuk ikon & bendera
-- Tanpa framework, tanpa build step — 100% statis, siap deploy ke GitHub Pages
+- Tanpa framework, tanpa build step. 100% statis, siap deploy ke GitHub Pages
 
 ---
 
