@@ -1,4 +1,4 @@
-/* flags-data.js — Country flag database (200+ national teams) for World Cup Info's.
+/* flags-data.js: country flag database (200+ national teams) for World Cup Info's.
    All redrawn as simple geometric shapes (NOT official assets/photos).
    Used for autocomplete: type a 3-letter FIFA code (e.g. "MEX") -> flag shows up.
 
