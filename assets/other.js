@@ -1,4 +1,4 @@
-/* other.js — Custom SVG asset collection for World Cup Info's
+/* other.js: custom SVG asset collection for World Cup Info's
    Semua desain ORIGINAL, bukan reproduksi logo/trofi resmi FIFA. */
 
 var OTHER_SVG = {
@@ -14,7 +14,7 @@ var OTHER_SVG = {
     '<circle cx="50" cy="36" r="8" fill="#FFFFFF" opacity="0.35"/>' +
     '</svg>',
 
-  // Logo custom "WC 2030" — desain sendiri, bukan emblem resmi FIFA
+  // Logo custom "WC 2030", desain sendiri, bukan emblem resmi FIFA
   wc2030Logo: '<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">' +
     '<circle cx="100" cy="100" r="94" fill="#0B3D2E"/>' +
     '<circle cx="100" cy="100" r="94" fill="none" stroke="#D4AF37" stroke-width="5"/>' +
