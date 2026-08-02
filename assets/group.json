@@ -1,5 +1,5 @@
 {
-  "_readme": "Fill in each group with FIFA 3-letter codes (e.g. MAR, ESP, JPN). Use \"TBD\" for slots not yet determined. Codes must match the codes in assets/flags-data.js (FIFA_TEAMS) so the flag renders automatically and elimination tracking works. The 6 host nations are pre-filled. Edit this file directly — app.js reads it on every page load.",
+  "_readme": "Fill in each group with FIFA 3-letter codes (e.g. MAR, ESP, JPN). Use \"TBD\" for slots not yet determined. Codes must match the codes in assets/flags-data.js (FIFA_TEAMS) so the flag renders automatically and elimination tracking works. The 6 host nations are pre-filled. Edit this file directly; app.js reads it on every page load.",
 
   "48": {
     "A": ["MAR", "TBD", "TBD", "TBD"],
