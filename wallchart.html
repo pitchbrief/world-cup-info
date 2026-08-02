@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WC 2030 Wallchart — World Cup Info's</title>
+<title>WC 2030 Wallchart | World Cup Info's</title>
 <script>
   (function () {
     try {
@@ -18,6 +18,8 @@
   })();
 </script>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Ccircle cx=%2716%27 cy=%2716%27 r=%2716%27 fill=%27%230B3D2E%27/%3E%3Ccircle cx=%2716%27 cy=%2715%27 r=%279%27 fill=%27%23F4F1E8%27/%3E%3Cpolygon points=%2716,10 19,12.5 18,16 14,16 13,12.5%27 fill=%27%231A1A1A%27/%3E%3C/svg%3E">
+<script src="security.js"></script>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self';">
 <link rel="stylesheet" href="style.css">
 <style>
   /* CSS khusus halaman wallchart.html (JS logic ada di app.js) */
@@ -229,9 +231,8 @@
 <div class="page-shell">
 
   <div class="hero" style="padding:36px 0 20px;">
-    <div class="hero-badge" id="hero-badge-text">🏆 Wallchart Sandbox</div>
     <h1 style="font-size:32px;" id="wallchart-h1">Wallchart Sandbox</h1>
-    <p id="wallchart-subtitle">This is a simulation — the countdown to WC 2030 hasn't finished yet, so fill it in however you like. Fill in scores for every match, from the group stage all the way to the final, complete with extra time, penalty shootouts, and cards.</p>
+    <p id="wallchart-subtitle">This is a simulation. The countdown to WC 2030 hasn't finished yet, so fill it in however you like: enter scores for every match, from the group stage all the way to the final, complete with extra time, penalty shootouts, and cards.</p>
   </div>
 
   <div class="lock-banner">
@@ -265,7 +266,7 @@
 </div>
 
 <footer class="footer">
-  <p>World Cup Info's — a fan-made project, not officially affiliated with FIFA. Built by <a href="https://github.com/pitchbrief" target="_blank" rel="noopener">pitchbrief</a>.</p>
+  <p>World Cup Info's: a fan-made project, not officially affiliated with FIFA. Built by <a href="https://github.com/pitchbrief" target="_blank" rel="noopener">pitchbrief</a>.</p>
 </footer>
 
 <!-- "Other" modal -->
@@ -314,21 +315,19 @@
       iconEl.innerHTML = OTHER_SVG.lockClosed;
       titleEl.textContent = 'Wallchart Sandbox (simulation mode)';
       descEl.textContent = 'Turns into the real World Cup Wallchart once it unlocks on ' + cd.wallchartUnlock.label + '. Feel free to try filling in simulated scores below in the meantime.';
-      document.getElementById('hero-badge-text').innerHTML = '🏆 Wallchart Sandbox';
       document.getElementById('wallchart-h1').textContent = 'Wallchart Sandbox';
-      document.title = "Wallchart Sandbox — World Cup Info's";
+      document.title = "Wallchart Sandbox | World Cup Info's";
     } else {
       iconEl.innerHTML = OTHER_SVG.lockOpen;
       titleEl.textContent = 'World Cup Wallchart';
-      descEl.textContent = 'The tournament has started — fill in and track live match scores.';
-      document.getElementById('hero-badge-text').innerHTML = '🏆 World Cup Wallchart';
+      descEl.textContent = 'The tournament has started, fill in and track live match scores.';
       document.getElementById('wallchart-h1').textContent = 'World Cup Wallchart';
       document.getElementById('wallchart-subtitle').textContent = 'Fill in scores for every match, from the group stage all the way to the final, complete with extra time, penalty shootouts, and cards.';
-      document.title = "World Cup Wallchart — World Cup Info's";
+      document.title = "World Cup Wallchart | World Cup Info's";
     }
   });
 
-  // Tab switcher: World Cup Group / Score Wallchart — with a sliding pill
+  // Tab switcher: World Cup Group / Score Wallchart, with a sliding pill
   // indicator underneath the active tab (adapted from the user-provided
   // "Tabs" component's layoutId morph). Reason: these two tabs represent
   // the SAME underlying match data viewed two ways, so a pill that visibly
