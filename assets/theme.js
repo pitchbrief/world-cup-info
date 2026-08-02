@@ -1,4 +1,4 @@
-/* theme.js — Global Settings engine for World Cup Info's
+/* theme.js: global Settings engine for World Cup Info's
    Handles: dark/light/system mode, default wallchart format,
    default countdown timezone. Used on every page via
    <script src="assets/theme.js"></script> + snippet anti-flash di <head>. */
@@ -89,8 +89,8 @@ var WCSettings = (function () {
     updateToggleIcon(resolvedTheme(get("theme")));
   }
 
-  // Floating Dock — persistent quick-nav (desktop only; mobile already has the
-  // navbar hamburger, so the dock would just duplicate it — see the
+  // Floating Dock: persistent quick-nav (desktop only; mobile already has the
+  // navbar hamburger, so the dock would just duplicate it (see the
   // max-width:640px rule in style.css). Adapted from the user-provided
   // "Floating Dock" component: icon-only dock, magnify + lift on hover,
   // active page highlighted. Reason for existing on a multi-page info site:
