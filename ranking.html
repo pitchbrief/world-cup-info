@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FIFA Ranking — World Cup Info's</title>
+<title>FIFA Ranking | World Cup Info's</title>
 <script>
   (function () {
     try {
@@ -18,9 +18,11 @@
   })();
 </script>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Ccircle cx=%2716%27 cy=%2716%27 r=%2716%27 fill=%27%230B3D2E%27/%3E%3Ccircle cx=%2716%27 cy=%2715%27 r=%279%27 fill=%27%23F4F1E8%27/%3E%3Cpolygon points=%2716,10 19,12.5 18,16 14,16 13,12.5%27 fill=%27%231A1A1A%27/%3E%3C/svg%3E">
+<script src="security.js"></script>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self';">
 <link rel="stylesheet" href="style.css">
 <style>
-  /* CSS + JS specific to ranking.html — self-contained */
+  /* CSS + JS specific to ranking.html (self-contained) */
 
   .ranking-wrap {
     max-width: 720px;
@@ -120,7 +122,6 @@
 <div class="page-shell">
 
   <div class="hero" style="padding:36px 0 24px;">
-    <div class="hero-badge">📊 FIFA Ranking</div>
     <h1 style="font-size:32px;">FIFA World Ranking</h1>
     <p>Showing the Top 100 national teams by ranking points.</p>
   </div>
@@ -137,7 +138,7 @@
 </div>
 
 <footer class="footer">
-  <p>World Cup Info's — a fan-made project, not officially affiliated with FIFA. Built by <a href="https://github.com/pitchbrief" target="_blank" rel="noopener">pitchbrief</a>.</p>
+  <p>World Cup Info's: a fan-made project, not officially affiliated with FIFA. Built by <a href="https://github.com/pitchbrief" target="_blank" rel="noopener">pitchbrief</a>.</p>
 </footer>
 
 <script src="assets/flags-data.js"></script>
