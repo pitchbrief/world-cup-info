@@ -1,36 +1,36 @@
-/* effects.js — Vanilla JS/CSS adaptations of the Aceternity-style motion
+/* effects.js: vanilla JS/CSS adaptations of the Aceternity-style motion
    components the user provided. World Cup Info's is a plain HTML/CSS/ES5
    static site (no React, no framer-motion, no build step), so each effect
    below re-implements the same INTERACTION IDEA using the DOM + CSS
    transitions instead of importing the original React components verbatim.
 
-   Included here (used elsewhere in the site with a stated reason — see
+   Included here (used elsewhere in the site with a stated reason, see
    HumanCraft Design Intelligence rules, no effect added "just because"):
 
-   1. textGenerateEffect(el)   — from "Text Generate Effect" component.
+   1. textGenerateEffect(el): from "Text Generate Effect" component.
       Words fade in from a blur, staggered. Used once, on the homepage H1,
-      to read like a briefing being revealed — matches the "PitchBrief"
+      to read like a briefing being revealed, matches the "PitchBrief"
       summary-first brand voice. Not reused elsewhere (rule: don't repeat
       a flashy device until it becomes wallpaper).
 
-   2. pointerHighlight(el)     — from "Pointer Highlight" component.
+   2. pointerHighlight(el): from "Pointer Highlight" component.
       Draws an animated box + pointer around one call-out phrase to direct
       the eye to the single most important fact in the hero (Rule 5:
-      visual hierarchy — one focal point, not everything highlighted).
+      visual hierarchy: one focal point, not everything highlighted).
 
-   3. cardStack(container, items) — from "Card Stack" component.
+   3. cardStack(container, items): from "Card Stack" component.
       Used for the homepage QnA preview: a literal stack of cards implies
       "there's more underneath", nudging people toward the full Docs page.
 
-   4. statefulButton(btn, actionFn) — from "Stateful Button" component.
+   4. statefulButton(btn, actionFn): from "Stateful Button" component.
       Spinner -> checkmark feedback for actions where silence would be
-      confusing (Settings resets, Wallchart modal save) — confirms the
+      confusing (Settings resets, Wallchart modal save): confirms the
       action actually happened.
 
    (Floating Dock and the animated Tabs pill live in theme.js and
    wallchart.html respectively, since those needed to hook into
    already-shared code. Text Hover Effect lives inline in index.html's
-   footer, as a small one-off flourish — see that file.) */
+   footer, as a small one-off flourish (see that file). */
 
 /* ---------------- 1. Text Generate Effect ---------------- */
 
@@ -108,45 +108,55 @@ function pointerHighlight(el, opts) {
 
 function cardStack(container, items, opts) {
   if (!container || !items || items.length === 0) { return; }
-  opts = opts || {};
-  var offset = opts.offset || 12;
-  var scaleStep = opts.scaleStep || 0.05;
-  var intervalMs = opts.intervalMs || 5000;
+  try {
+    opts = opts || {};
+    var offset = opts.offset || 12;
+    var scaleStep = opts.scaleStep || 0.05;
+    var intervalMs = opts.intervalMs || 5000;
 
-  var order = items.slice();
-  container.classList.add("card-stack");
-  container.innerHTML = "";
+    var order = items.slice();
+    container.classList.add("card-stack");
+    container.innerHTML = "";
 
-  var cardEls = order.map(function (item) {
-    var card = document.createElement("div");
-    card.className = "card-stack-item";
-    card.innerHTML =
-      '<div class="card-stack-content">' + item.content + '</div>' +
-      '<div class="card-stack-footer"><strong>' + item.title + '</strong></div>';
-    container.appendChild(card);
-    return card;
-  });
-
-  function layout() {
-    cardEls.forEach(function (card, i) {
-      var pos = order[i]._pos;
-      card.style.transform = "translateY(" + (pos * -offset) + "px) scale(" + (1 - pos * scaleStep) + ")";
-      card.style.zIndex = String(cardEls.length - pos);
+    var cardEls = order.map(function (item) {
+      var card = document.createElement("div");
+      card.className = "card-stack-item";
+      card.innerHTML =
+        '<div class="card-stack-content">' + item.content + '</div>' +
+        '<div class="card-stack-footer"><strong>' + item.title + '</strong></div>';
+      container.appendChild(card);
+      return card;
     });
-  }
 
-  order.forEach(function (item, i) { item._pos = i; });
-  layout();
+    function layout() {
+      cardEls.forEach(function (card, i) {
+        var pos = order[i]._pos;
+        card.style.transform = "translateY(" + (pos * -offset) + "px) scale(" + (1 - pos * scaleStep) + ")";
+        card.style.zIndex = String(cardEls.length - pos);
+      });
+    }
 
-  setInterval(function () {
-    // move the front card (_pos 0) to the back, shift everyone else forward — same
-    // rotation logic as the original component's unshift(pop())
-    var maxPos = order.length - 1;
-    order.forEach(function (item) {
-      item._pos = item._pos === 0 ? maxPos : item._pos - 1;
-    });
+    order.forEach(function (item, i) { item._pos = i; });
     layout();
-  }, intervalMs);
+
+    setInterval(function () {
+      // move the front card (_pos 0) to the back, shift everyone else forward, same
+      // rotation logic as the original component's unshift(pop())
+      var maxPos = order.length - 1;
+      order.forEach(function (item) {
+        item._pos = item._pos === 0 ? maxPos : item._pos - 1;
+      });
+      layout();
+    }, intervalMs);
+  } catch (err) {
+    // Never leave the section blank: fall back to a plain stacked-looking
+    // list (CSS-only offset, no JS animation) if anything above throws.
+    console.error("cardStack() failed, falling back to static list:", err);
+    container.classList.remove("card-stack");
+    container.innerHTML = items.map(function (item) {
+      return '<div class="card-stack-fallback-item"><strong>' + item.title + '</strong><div>' + item.content + '</div></div>';
+    }).join("");
+  }
 }
 
 /* ---------------- 4. Stateful Button ---------------- */
@@ -172,7 +182,7 @@ function statefulButton(btn, actionFn) {
       spinner.classList.remove("show");
       if (result === false) {
         // actionFn signaled "nothing happened" (e.g. user cancelled a confirm())
-        // — just reset, no success checkmark, since nothing was confirmed.
+        // just reset, no success checkmark, since nothing was confirmed.
         btn.classList.remove("stateful-busy");
         return;
       }
