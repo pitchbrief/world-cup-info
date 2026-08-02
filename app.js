@@ -1,11 +1,11 @@
-/* app.js — WC 2030 Wallchart interactive logic
-   World Cup Info's — vanilla ES5, no framework.
+/* app.js: WC 2030 Wallchart interactive logic
+   World Cup Info's, vanilla ES5, no framework.
 
    ====================================================================
    FORMAT (read-only in the UI, no more toggle buttons here):
    The active format (48 or 64 teams) is chosen once on the Settings
    page and read from there. FORMAT_OVERRIDE below is a hidden manual
-   override for the site owner only — set to "48" or "64" to force it
+   override for the site owner only, set to "48" or "64" to force it
    regardless of Settings. Leave null to follow Settings, then
    wallchart.json's activeFormat as the final fallback.
    ==================================================================== */
@@ -15,11 +15,11 @@ var STORAGE_KEY = "wcinfo30_wallchart_state_v1";
 
 var wallchartData = null;
 var configData = null;
-var groupData = null; // from assets/group.json — FIFA codes per group, per format
+var groupData = null; // from assets/group.json, FIFA codes per group, per format
 var currentFormat = "64";
 var matchState = {}; // { matchId: { home, away, round, date, time, halfTime:{h,a}, fullTime:{h,a}, extraTime:{enabled,periods:[]}, penalties:{...}, cards:{...} } }
 var activeModalMatchId = null;
-var eliminatedCodes = {}; // { CODE: true } — recomputed every render
+var eliminatedCodes = {}; // { CODE: true }, recomputed every render
 
 var ROUND_META = {
   GS: { label: "Group Stage", badge: "GS" },
@@ -146,7 +146,7 @@ function renderNote() {
 
 // Resolves a label to a real team {code, name} if it's a known FIFA code or
 // full team name. Knockout placeholders like "Winner A" or "TBD" resolve to
-// null — meaning: no flag yet, not eligible for elimination tracking.
+// null, meaning no flag yet and not eligible for elimination tracking.
 function resolveTeam(label) {
   if (!label || typeof FIFA_TEAMS === "undefined") { return null; }
   var upper = label.toUpperCase();
@@ -472,7 +472,7 @@ function renderModalBody(m) {
   var html = "";
 
   if (groupStage) {
-    html += '<p style="font-size:12px;color:var(--color-text-muted);margin-bottom:16px;background:rgba(212,175,55,0.1);padding:10px 14px;border-radius:var(--radius-sm);">Group Stage match — no Extra Time or Penalty Shootout, straight to Full Time.</p>';
+    html += '<p style="font-size:12px;color:var(--color-text-muted);margin-bottom:16px;background:rgba(212,175,55,0.1);padding:10px 14px;border-radius:var(--radius-sm);">Group Stage match: no Extra Time or Penalty Shootout, straight to Full Time.</p>';
   }
 
   html += '<div class="modal-section">';
@@ -592,7 +592,7 @@ function cardStepperBlock(teamLabel, side, type, value) {
     '</div></div></div>';
 }
 
-/* renderExtraTimePeriods — each period row now has a remove (✕) button.
+/* renderExtraTimePeriods: each period row now has a remove (✕) button.
    BUG FIX: previously there was no way to delete an accidentally-added
    period. Now every period (including the first two default ones) can
    be removed individually, and remaining periods are renumbered. */
